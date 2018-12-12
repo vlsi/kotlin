@@ -73,10 +73,12 @@ class RunScratchAction : ScratchAction(
         executor.addOutputHandler(object : ScratchOutputHandlerAdapter() {
             override fun onStart(file: ScratchFile) {
                 ScratchCompilationSupport.start(file, executor)
+                scratchPanel.updateToolbar()
             }
 
             override fun onFinish(file: ScratchFile) {
                 ScratchCompilationSupport.stop()
+                scratchPanel.updateToolbar()
             }
         })
 
