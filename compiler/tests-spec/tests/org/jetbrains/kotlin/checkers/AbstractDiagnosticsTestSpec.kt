@@ -42,8 +42,6 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
         private const val MODULE_PATH = "compiler/tests-spec"
         private const val DIAGNOSTICS_TESTDATA_PATH = "$MODULE_PATH/testData/diagnostics"
         private const val HELPERS_PATH = "$DIAGNOSTICS_TESTDATA_PATH/helpers"
-        private val exceptionPattern =
-            Pattern.compile("""Exception while analyzing expression at \((?<lineNumber>\d+),(?<symbolNumber>\d+)\) in /(?<filename>.*?)$""")
     }
 
     lateinit var specTest: AbstractSpecTest

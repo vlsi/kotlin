@@ -33,18 +33,10 @@ class DebugInfoDiagnosticFactory1 : DiagnosticFactory1<PsiElement, String>,
         dataFlowValueFactory: DataFlowValueFactory,
         languageVersionSettings: LanguageVersionSettings,
         moduleDescriptor: ModuleDescriptorImpl
-    ): Diagnostic {
-        return this.on(
-            expression,
-            "\"" + Renderers.renderExpressionType(
-                expression,
-                bindingContext,
-                dataFlowValueFactory,
-                languageVersionSettings,
-                moduleDescriptor
-            ) + "\""
-        )
-    }
+    ) = this.on(
+        expression,
+        Renderers.renderExpressionType(expression, bindingContext, dataFlowValueFactory, languageVersionSettings, moduleDescriptor)
+    )
 
     protected constructor(name: String, severity: Severity) : super(severity, PositioningStrategies.DEFAULT) {
         this.name = name

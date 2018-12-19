@@ -11,6 +11,7 @@ import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.kotlin.checkers.utils.CheckerTestUtil
 import org.jetbrains.kotlin.diagnostics.rendering.AbstractDiagnosticWithParametersRenderer
 import org.jetbrains.kotlin.diagnostics.rendering.DefaultErrorMessages
+import java.util.regex.Pattern
 
 class TextDiagnostic(
     override val name: String,
@@ -73,7 +74,7 @@ class TextDiagnostic(
         result.append(name)
         if (parameters != null) {
             result.append("(")
-            result.append(StringUtil.join(parameters, { escape(it) }, "; "))
+            result.append("${StringUtil.join(parameters, { "\"$it\"" }, ", ")}")
             result.append(")")
         }
         return result.toString()
@@ -106,11 +107,9 @@ class TextDiagnostic(
                 inference
             )
 
-            val parsedParameters = SmartList<String>()
-            val parametersMatcher = CheckerTestUtil.individualParameterPattern.matcher(parameters)
-            while (parametersMatcher.find())
-                parsedParameters.add(unescape(parametersMatcher.group().trim { it <= ' ' }))
-            return TextDiagnostic(name, platform, parsedParameters, inference)
+            val x = parameters.trim('"').split(Regex("""",\s*""""))
+
+            return TextDiagnostic(name, platform, x, inference)
         }
 
         private fun computeInferenceCompatibility(abbreviation: String?): InferenceCompatibility {
@@ -120,14 +119,6 @@ class TextDiagnostic(
         private fun extractDataBefore(prefix: String?, anchor: String): String? {
             assert(prefix == null || prefix.endsWith(anchor)) { prefix ?: "" }
             return prefix?.substringBeforeLast(anchor, prefix)
-        }
-
-        private fun escape(s: String): String {
-            return s.replace("([${CheckerTestUtil.SHOULD_BE_ESCAPED}])".toRegex(), "\\\\$1")
-        }
-
-        private fun unescape(s: String): String {
-            return s.replace("\\\\([${CheckerTestUtil.SHOULD_BE_ESCAPED}])".toRegex(), "$1")
         }
 
         fun asTextDiagnostic(abstractTestDiagnostic: AbstractTestDiagnostic): TextDiagnostic {

@@ -6,8 +6,8 @@
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
  *
  * SPEC VERSION: 0.1-draft
- * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 1
- * NUMBER: 2
+ * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 2
+ * NUMBER: 200
  * DESCRIPTION: Nullability condition smartcast source using if expression and anonymous object types.
  * UNEXPECTED BEHAVIOUR
  */

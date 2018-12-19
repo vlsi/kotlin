@@ -7,7 +7,7 @@
  *
  * SPEC VERSION: 0.1-draft
  * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 1
- * NUMBER: 1
+ * NUMBER: 200
  * DESCRIPTION: Nullability condition smartcast source using if expression and simple builtin and custom types.
  * UNEXPECTED BEHAVIOUR
  */
@@ -182,11 +182,11 @@ data class A9<T, K, L>(
 fun case_9(a: A9<Int?, Int, Any>) {
     var (x, y, _) = a
 
-    if (<!OI;IMPLICIT_BOXING_IN_IDENTITY_EQUALS!>x === y<!>) {
+    if (<!IMPLICIT_BOXING_IN_IDENTITY_EQUALS!>x === y<!>) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
     }
 
-    if (<!OI;IMPLICIT_BOXING_IN_IDENTITY_EQUALS!>x == z<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+    if (x == <!UNRESOLVED_REFERENCE!>z<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>x<!>
     }
 }

@@ -27,17 +27,14 @@ import java.util.*
 import java.util.regex.Pattern
 
 object CheckerTestUtil {
-    const val SHOULD_BE_ESCAPED = "\\)\\(;"
     const val NEW_INFERENCE_PREFIX = "NI"
     const val OLD_INFERENCE_PREFIX = "OI"
 
     private const val IGNORE_DIAGNOSTIC_PARAMETER = "IGNORE"
-    private const val DIAGNOSTIC_PARAMETER = "(?:(?:\\\\[$SHOULD_BE_ESCAPED])|[^$SHOULD_BE_ESCAPED])+"
-    private const val INDIVIDUAL_DIAGNOSTIC = "(\\w+;)?(\\w+:)?(\\w+)(\\($DIAGNOSTIC_PARAMETER(;\\s*$DIAGNOSTIC_PARAMETER)*\\))?"
+    private const val INDIVIDUAL_DIAGNOSTIC = """(\w+;)?(\w+:)?(\w+)(?:\(((?:".*?")(?:,\s*".*?")*)\))?"""
 
     private val rangeStartOrEndPattern = Pattern.compile("(<!$INDIVIDUAL_DIAGNOSTIC(,\\s*$INDIVIDUAL_DIAGNOSTIC)*!>)|(<!>)")
     val individualDiagnosticPattern: Pattern = Pattern.compile(INDIVIDUAL_DIAGNOSTIC)
-    val individualParameterPattern: Pattern = Pattern.compile(DIAGNOSTIC_PARAMETER)
 
     fun getDiagnosticsIncludingSyntaxErrors(
         bindingContext: BindingContext,
