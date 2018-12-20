@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_ENUM_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 7
  * NUMBER: 1
  * DESCRIPTION: Checking for not exhaustive when when not covered by all enumerated values.
+ * HELPERS: enumClasses
  */
 
 // TESTCASE NUMBER: 1

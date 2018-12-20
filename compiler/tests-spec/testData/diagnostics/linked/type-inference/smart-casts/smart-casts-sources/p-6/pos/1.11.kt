@@ -1,6 +1,5 @@
 // !LANGUAGE: +NewInference
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_CLASSES_WITH_PROJECTIONS
 // SKIP_TXT
 
 /*
@@ -10,6 +9,7 @@
  * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 1
  * NUMBER: 11
  * DESCRIPTION: Nullability condition, if, intersection types
+ * HELPERS: classesWithProjections
  */
 
 // TESTCASE NUMBER: 1
@@ -20,6 +20,7 @@ fun case_1() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Byte & Double & Int & Long & Short}> & Number} & {Comparable<{Byte & Double & Int & Long & Short}> & Number}?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Byte & Double & Int & Long & Short}> & Number}? & {Comparable<{Byte & Double & Int & Long & Short}> & Number}"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -31,6 +32,7 @@ fun case_2(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Int}> & Number} & {Comparable<{Double & Int}> & Number}?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Int}> & Number}? & {Comparable<{Double & Int}> & Number}"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -47,11 +49,13 @@ fun case_3(a: Int?, b: Float?, c: Double?, d: Boolean?) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}"), DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}")!>this<!>
         if (this != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}"), DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}")!>this<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}> & Number}"), DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}"), DEBUG_INFO_SMARTCAST!>this<!>.equals(this)
         }
     }.let {
         <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?}")!>it<!>
         if (it != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}> & Number} & {Comparable<{Double & Float & Int}>? & Number?}")!>it<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Double & Float & Int}>? & Number?} & {Comparable<{Double & Float & Int}> & Number}"), DEBUG_INFO_SMARTCAST!>it<!>.equals(it)
         }
     }
 }
@@ -75,15 +79,17 @@ fun case_4(a: A4?, b: B4?, d: Boolean) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}"), DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}")!>this<!>
         if (this != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}"), DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}")!>this<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A4 & B4}"), DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}"), DEBUG_INFO_SMARTCAST!>this<!>.equals(this)
         }
     }
     x.let {
         <!DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?}")!>it<!>
         if (it != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A4 & B4} & {A4? & B4?}")!>it<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A4? & B4?} & {A4 & B4}"), DEBUG_INFO_SMARTCAST!>it<!>.equals(it)
         }
     }
-    }
+}
 
 /*
  * TESTCASE NUMBER: 5
@@ -103,11 +109,13 @@ fun case_5(a: A5?, b: B5?, d: Boolean) {
     x.apply {
         if (this != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A5? & B5?}"), DEBUG_INFO_EXPRESSION_TYPE("{A5? & B5?}")!>this<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A5 & B5}"), DEBUG_INFO_EXPRESSION_TYPE("{A5? & B5?}"), DEBUG_INFO_SMARTCAST!>this<!>.equals(this)
         }
     }
     x.let {
         if (it != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A5 & B5} & {A5? & B5?}")!>it<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A5? & B5?} & {A5 & B5}"), DEBUG_INFO_SMARTCAST!>it<!>.equals(it)
         }
     }
 }
@@ -116,8 +124,12 @@ fun case_5(a: A5?, b: B5?, d: Boolean) {
  * TESTCASE NUMBER: 6
  * ISSUES: KT-28670
  */
-interface A6
-interface B6
+interface A6 {
+    fun test1() {}
+}
+interface B6 {
+    fun test2() {}
+}
 interface C6
 
 fun case_6(a: A6?, b: B6, d: Boolean) {
@@ -133,6 +145,9 @@ fun case_6(a: A6?, b: B6, d: Boolean) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}"), DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}")!>this<!>
         if (<!SENSELESS_COMPARISON!>this != null<!>) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}"), DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}")!>this<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("C6"), DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}"), DEBUG_INFO_SMARTCAST!>this<!>.equals(this)
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A6 & B6}"), DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}"), DEBUG_INFO_SMARTCAST!>this<!>.test1()
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A6 & B6}"), DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?}"), DEBUG_INFO_SMARTCAST!>this<!>.test2()
         }
     }
     x.let {
@@ -140,6 +155,9 @@ fun case_6(a: A6?, b: B6, d: Boolean) {
         <!DEBUG_INFO_EXPRESSION_TYPE("C6 & {A6 & B6} & {A6? & B6?}")!>it<!>
         if (<!SENSELESS_COMPARISON!>it != null<!>) {
             <!DEBUG_INFO_EXPRESSION_TYPE("C6 & {A6 & B6} & {A6? & B6?}")!>it<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?} & C6"), DEBUG_INFO_SMARTCAST!>it<!>.equals(it)
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?} & {A6 & B6}"), DEBUG_INFO_SMARTCAST!>it<!>.test1()
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A6? & B6?} & {A6 & B6}"), DEBUG_INFO_SMARTCAST!>it<!>.test2()
         }
     }
 }
@@ -148,8 +166,12 @@ fun case_6(a: A6?, b: B6, d: Boolean) {
  * TESTCASE NUMBER: 7
  * ISSUES: KT-28670
  */
-interface A7
-interface B7
+interface A7 {
+    fun test1() {}
+}
+interface B7 {
+    fun test2() {}
+}
 interface C7
 
 fun case_6(a: A7?, b: B7?, d: Boolean) {
@@ -165,6 +187,9 @@ fun case_6(a: A7?, b: B7?, d: Boolean) {
         <!DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}"), DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}")!>this<!>
         if (this != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}"), DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}")!>this<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("C7"), DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}"), DEBUG_INFO_SMARTCAST!>this<!>.equals(this)
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A7 & B7}"), DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}"), DEBUG_INFO_SMARTCAST!>this<!>.test1()
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A7 & B7}"), DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?}"), DEBUG_INFO_SMARTCAST!>this<!>.test2()
         }
     }
     x.let {
@@ -172,6 +197,9 @@ fun case_6(a: A7?, b: B7?, d: Boolean) {
         <!DEBUG_INFO_EXPRESSION_TYPE("C7? & {A7? & B7?}")!>it<!>
         if (it != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("C7 & {A7 & B7} & {A7? & B7?}")!>it<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?} & C7"), DEBUG_INFO_SMARTCAST!>it<!>.equals(it)
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?} & {A7 & B7}"), DEBUG_INFO_SMARTCAST!>it<!>.test1()
+            <!DEBUG_INFO_EXPRESSION_TYPE("{A7? & B7?} & {A7 & B7}"), DEBUG_INFO_SMARTCAST!>it<!>.test2()
         }
     }
 }

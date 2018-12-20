@@ -1,5 +1,3 @@
-// !WITH_ENUM_CLASSES
-// !WITH_SEALED_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -8,6 +6,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 1
  * NUMBER: 3
  * DESCRIPTION: Check when exhaustive via else entry (when with bound value, redundant else).
+ * HELPERS: enumClasses, sealedClasses
  */
 
 // TESTCASE NUMBER: 1

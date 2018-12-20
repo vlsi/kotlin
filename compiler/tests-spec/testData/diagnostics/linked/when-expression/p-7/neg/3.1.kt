@@ -1,4 +1,3 @@
-// !WITH_BASIC_TYPES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -7,6 +6,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 3
  * NUMBER: 1
  * DESCRIPTION: 'When' with bound value and 'when condition' with range expression, but without containment checking operator.
+ * HELPERS: basicTypes
  */
 
 // TESTCASE NUMBER: 1

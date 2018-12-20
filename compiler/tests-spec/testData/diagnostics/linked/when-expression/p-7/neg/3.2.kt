@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 3
  * NUMBER: 2
  * DESCRIPTION: 'When' with bound value and 'when condition' with contains operator and type without defined contains operator.
+ * HELPERS: classes
  */
 
 // TESTCASE NUMBER: 1

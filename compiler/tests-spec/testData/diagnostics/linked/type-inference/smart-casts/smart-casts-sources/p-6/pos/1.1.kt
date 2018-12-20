@@ -9,24 +9,25 @@
  * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 1
  * NUMBER: 1
  * DESCRIPTION: Nullability condition (value & reference equality) smartcast source using if expression and simple builtin and custom types for one variable.
+ * HELPERS: classes, objects, typealiases
  */
 
-// FILE: other_types.kt
+// FILE: other_package.kt
 
-package othertypes
+package otherpackage
 
 // TESTCASE NUMBER: 13
-class A {}
+class _EmptyClass13 {}
 
 // TESTCASE NUMBER: 14
-typealias B = String?
+typealias _TypeAliasNullableString = String?
 
 // TESTCASE NUMBER: 16
 typealias C = Nothing
 
 // FILE: main.kt
 
-import othertypes.*
+import otherpackage.*
 
 // TESTCASE NUMBER: 6
 class A {}
@@ -44,10 +45,10 @@ typealias D = Float
 typealias E = C
 
 // TESTCASE NUMBER: 15
-typealias F = othertypes.B
+typealias F = _EmptyObject
 
 // TESTCASE NUMBER: 16
-typealias G = othertypes.C?
+typealias G = otherpackage.C?
 
 // TESTCASE NUMBER: 1
 fun case_1(x: Any?) {
@@ -70,15 +71,11 @@ fun case_2(x: Nothing?) {
 }
 
 // TESTCASE NUMBER: 3
-object A3 {
-    val x: Number? = null
-}
-
 fun case_3() {
-    if (A3.x == null)
+    if (_Object.prop_1 == null)
         else {
-            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>A3.x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>A3.x<!>.equals(A3.x)
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>_Object.prop_1<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>A3.x<!>.equals(_Object.prop_1)
         }
 }
 
@@ -99,33 +96,31 @@ fun case_5() {
 }
 
 // TESTCASE NUMBER: 6
-fun case_6(x: A?) {
+fun case_6(x: _EmptyClass?) {
     val y = true
 
     if (x != null && !y) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A & A?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A? & A"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass & _EmptyClass?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass? & _EmptyClass"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 7
-val x7: B? = null
-
 fun case_7() {
-    if (x7 != null || <!SENSELESS_COMPARISON!><!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("B? & kotlin.Nothing?")!>x7<!> != null<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("B & B?")!>x7<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("B? & B"), DEBUG_INFO_SMARTCAST!>x7<!>.equals(x7)
+    if (nullableProperty != null || <!SENSELESS_COMPARISON!><!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("B? & kotlin.Nothing?")!>nullableProperty<!> != null<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("B & B?")!>nullableProperty<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("B? & B"), DEBUG_INFO_SMARTCAST!>nullableProperty<!>.equals(nullableProperty)
     }
 }
 
 // TESTCASE NUMBER: 8
-fun case_8(x: C) {
+fun case_8(x: _TypeAliasNullableString) {
     if (x !== null && <!SENSELESS_COMPARISON!><!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C /* = kotlin.String? */")!>x<!> != null<!>) <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C /* = kotlin.String? */")!>x<!>
     if (x !== null && <!SENSELESS_COMPARISON!><!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C /* = kotlin.String? */")!>x<!> != null<!>) <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String? */ & C /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
 }
 
 // TESTCASE NUMBER: 9
-fun case_9(x: C<!REDUNDANT_NULLABLE!>?<!>) {
+fun case_9(x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>) {
     if (x === null) {
 
     } else if (false) {
@@ -135,31 +130,26 @@ fun case_9(x: C<!REDUNDANT_NULLABLE!>?<!>) {
 }
 
 // TESTCASE NUMBER: 10
-class A10 {
-    val x: D? = null
-}
-
 fun case_10() {
-    val a = A10()
+    val a = _Class()
 
-    if (a.x === null || true) {
-        if (a.x != null) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */ & D? /* = kotlin.Float? */")!>a.x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
+    if (a.prop_4 === null || true) {
+        if (a.prop_4 != null) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */ & D? /* = kotlin.Float? */")!>a.prop_4<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.prop_4)
         }
     }
 }
 
 // TESTCASE NUMBER: 11
-val x11: E = null
-fun case_11(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
-    val t: E = null
+fun case_11(x: _TypeAliasNullableStringIndirect<!REDUNDANT_NULLABLE!>?<!>, y: _TypeAliasNullableStringIndirect) {
+    val t: _TypeAliasNullableStringIndirect = null
 
     if (x == null) {
 
     } else {
         if (y != null) {
-            if (x11 == null) {
+            if (nullableStringProperty == null) {
                 if (t != null) {
                     <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String */ & E? /* = kotlin.String? */")!>x<!>
                     <!DEBUG_INFO_EXPRESSION_TYPE("E? /* = kotlin.String? */ & E /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
@@ -170,30 +160,31 @@ fun case_11(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
 }
 
 // TESTCASE NUMBER: 12
-fun case_12(x: E, y: E) = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x == null) "1"
-    else if (y === null) <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String */ & E /* = kotlin.String? */"), DEBUG_INFO_SMARTCAST!>x<!>
-    else if (<!SENSELESS_COMPARISON!>y === null<!>) <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String? */ & E /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
-    else "-1"<!>
+fun case_12(x: _TypeAliasNullableStringIndirect, y: _TypeAliasNullableStringIndirect) =
+    <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x == null) "1"
+        else if (y === null) <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String */ & E /* = kotlin.String? */"), DEBUG_INFO_SMARTCAST!>x<!>
+        else if (<!SENSELESS_COMPARISON!>y === null<!>) <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String? */ & E /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        else "-1"<!>
 
 // TESTCASE NUMBER: 13
-fun case_13(x: othertypes.A?) =
+fun case_13(x: otherpackage._EmptyClass13?) =
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Boolean")!>if (x == null) {
         throw Exception()
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.A & othertypes.A?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.A? & othertypes.A"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass & _EmptyClass?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass? & _EmptyClass"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }<!>
 
 // TESTCASE NUMBER: 14
-class A14 {
-    val x: othertypes.B<!REDUNDANT_NULLABLE!>?<!>
+class Case14 {
+    val x: othertypes._TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>
     init {
-        x = othertypes.B()
+        x = othertypes._TypeAliasNullableString()
     }
 }
 
 fun case_14() {
-    val a = A14()
+    val a = Case14()
 
     if (a.x != null) {
         if (<!SENSELESS_COMPARISON!>a.x != null<!>) {

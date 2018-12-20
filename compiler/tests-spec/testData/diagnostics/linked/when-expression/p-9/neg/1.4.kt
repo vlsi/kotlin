@@ -1,6 +1,4 @@
 // !CHECK_TYPE
-// !WITH_SEALED_CLASSES
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -9,6 +7,7 @@
  * PLACE: when-expression -> paragraph 9 -> sentence 1
  * NUMBER: 4
  * DESCRIPTION: 'When' least upper bound of the types check (when exhaustive via sealed class).
+ * HELPERS: classes, sealedClasses
  */
 
 // TESTCASE NUMBER: 1

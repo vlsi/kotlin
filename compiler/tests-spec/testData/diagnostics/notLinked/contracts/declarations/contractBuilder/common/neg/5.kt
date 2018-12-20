@@ -7,6 +7,7 @@
  * SECTIONS: contracts, declarations, contractBuilder, common
  * NUMBER: 5
  * DESCRIPTION: contracts with not allowed expressions in implies.
+ * EXCEPTION: compiler
  */
 
 import kotlin.contracts.*

@@ -1,6 +1,3 @@
-// !WITH_BASIC_TYPES
-// !WITH_SEALED_CLASSES
-// !WITH_ENUM_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -9,6 +6,7 @@
  * PLACE: when-expression -> paragraph 3 -> sentence 2
  * NUMBER: 1
  * DESCRIPTION: 'When' without bound value and different variants of the boolean conditions (logical, equality, comparison, type checking operator, containment operator).
+ * HELPERS: basicTypes, enumClasses, sealedClasses
  */
 
 // TESTCASE NUMBER: 1

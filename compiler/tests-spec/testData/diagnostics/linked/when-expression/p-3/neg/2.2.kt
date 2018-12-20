@@ -1,4 +1,3 @@
-// !WITH_BASIC_TYPES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -7,6 +6,7 @@
  * PLACE: when-expression -> paragraph 3 -> sentence 2
  * NUMBER: 2
  * DESCRIPTION: 'When' without bound value and not allowed comma in when entry.
+ * HELPERS: basicTypes
  */
 
 // TESTCASE NUMBER: 1

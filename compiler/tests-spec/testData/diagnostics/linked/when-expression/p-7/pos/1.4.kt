@@ -1,4 +1,3 @@
-// !WITH_SEALED_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -7,6 +6,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 1
  * NUMBER: 4
  * DESCRIPTION: 'When' with bound value and enumaration of type test conditions (with invert type checking operator).
+ * HELPERS: sealedClasses
  */
 
 // TESTCASE NUMBER: 1

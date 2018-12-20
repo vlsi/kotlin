@@ -41,6 +41,8 @@ public final class _Class {
     public final val prop_1: kotlin.Int = 1
     public final val prop_2: kotlin.Int = 2
     public final val prop_3: kotlin.Int = 3
+    public final val prop_4: kotlin.Float? = 3.0.toFloat()
+    public final val prop_5: kotlin.Float? = 3.0.toFloat()
     public final operator fun contains(/*0*/ a: kotlin.Char): kotlin.Boolean
     public final operator fun contains(/*0*/ a: kotlin.Int): kotlin.Boolean
     public final operator fun contains(/*0*/ a: kotlin.Long): kotlin.Boolean

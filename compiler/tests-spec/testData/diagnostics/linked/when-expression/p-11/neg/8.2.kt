@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_SEALED_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 8
  * NUMBER: 2
  * DESCRIPTION: Checking for not exhaustive 'when' on the nullable sealed classes (and several checks for not sealed).
+ * HELPERS: sealedClasses
  */
 
 // TESTCASE NUMBER: 1

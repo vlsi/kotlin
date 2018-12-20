@@ -1,4 +1,3 @@
-// !WITH_BASIC_TYPES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -9,6 +8,7 @@
  * DESCRIPTION: 'When' without bound value and with Nothing in condition (subtype of Boolean).
  * DISCUSSION
  * ISSUES: KT-25948
+ * HELPERS: basicTypes
  */
 
 // TESTCASE NUMBER: 1

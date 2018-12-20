@@ -1,4 +1,3 @@
-// !WITH_ENUM_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -7,6 +6,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 8
  * NUMBER: 2
  * DESCRIPTION: Check when exhaustive when enumerated values are checked and contains a null check.
+ * HELPERS: enumClasses
  */
 
 // TESTCASE NUMBER: 1

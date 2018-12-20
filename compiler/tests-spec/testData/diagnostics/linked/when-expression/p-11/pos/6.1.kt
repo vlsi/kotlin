@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_SEALED_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 6
  * NUMBER: 1
  * DESCRIPTION: Check when exhaustive when possible subtypes of the sealed class are covered.
+ * HELPERS: sealedClasses
  */
 
 // TESTCASE NUMBER: 1

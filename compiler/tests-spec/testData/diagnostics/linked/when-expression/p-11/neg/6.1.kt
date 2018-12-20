@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_SEALED_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 6
  * NUMBER: 1
  * DESCRIPTION: Checking for not exhaustive 'when' when not covered by all possible subtypes or 'when' does not have bound value.
+ * HELPERS: sealedClasses
  */
 
 // TESTCASE NUMBER: 1

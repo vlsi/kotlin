@@ -1,6 +1,4 @@
 // !USE_EXPERIMENTAL: kotlin.contracts.ExperimentalContracts
-// !WITH_CONTRACT_FUNCTIONS
-// !WITH_ENUM_CLASSES
 // SKIP_TXT
 
 /*
@@ -9,6 +7,7 @@
  * SECTIONS: contracts, analysis, controlFlow, initialization
  * NUMBER: 3
  * DESCRIPTION: val/var reassignment and/or uninitialized variable usages with compelx control flow inside/outside lambda of contract function with CallsInPlace effect
+ * HELPERS: enumClasses, contractFunctions
  */
 
 // TESTCASE NUMBER: 1

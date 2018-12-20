@@ -1,5 +1,4 @@
 // !USE_EXPERIMENTAL: kotlin.contracts.ExperimentalContracts
-// !WITH_OBJECTS
 
 /*
  * KOTLIN DIAGNOSTICS NOT LINKED SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * NUMBER: 3
  * DESCRIPTION: Using reference equality in implies.
  * ISSUES: KT-26177
+ * HELPERS: objects
  */
 
 import kotlin.contracts.*

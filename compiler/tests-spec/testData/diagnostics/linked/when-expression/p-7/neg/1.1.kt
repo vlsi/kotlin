@@ -1,4 +1,3 @@
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -7,6 +6,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 1
  * NUMBER: 1
  * DESCRIPTION: 'When' with bound value and type test condition (without companion object in classes), but without type checking operator.
+ * HELPERS: classes
  */
 
 // TESTCASE NUMBER: 1

@@ -1,6 +1,3 @@
-// !WITH_BASIC_TYPES
-// !WITH_FUNCTIONS
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -9,6 +6,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 5
  * NUMBER: 1
  * DESCRIPTION: 'When' with enumeration of the different variants of expressions in 'when condition'.
+ * HELPERS: basicTypes, classes, functions
  */
 
 // TESTCASE NUMBER: 1

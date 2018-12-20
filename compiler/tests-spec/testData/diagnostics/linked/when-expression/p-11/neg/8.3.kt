@@ -1,5 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_ENUM_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 11 -> sentence 8
  * NUMBER: 3
  * DESCRIPTION: Checking for not exhaustive 'when' on the nullable enums.
+ * HELPERS: enumClasses
  */
 
 // TESTCASE NUMBER: 1

@@ -1,6 +1,4 @@
 // !CHECK_TYPE
-// !WITH_CLASSES
-// !WITH_ENUM_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -9,6 +7,7 @@
  * PLACE: when-expression -> paragraph 9 -> sentence 1
  * NUMBER: 2
  * DESCRIPTION: 'When' least upper bound of the types check (when exhaustive via enum).
+ * HELPERS: classes, enumClasses
  */
 
 // TESTCASE NUMBER: 1

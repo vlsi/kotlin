@@ -1,5 +1,4 @@
 // !CHECK_TYPE
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -8,6 +7,7 @@
  * PLACE: when-expression -> paragraph 9 -> sentence 1
  * NUMBER: 1
  * DESCRIPTION: 'When' least upper bound of the types check (when exhaustive via else branch).
+ * HELPERS: classes
  */
 
 // TESTCASE NUMBER: 1

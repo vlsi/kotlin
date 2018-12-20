@@ -1,6 +1,3 @@
-// !WITH_BASIC_TYPES
-// !WITH_CLASSES
-// !WITH_FUNCTIONS
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -9,6 +6,7 @@
  * PLACE: when-expression -> paragraph 7 -> sentence 5
  * NUMBER: 2
  * DESCRIPTION: 'When' with different variants of the arithmetic expressions (additive expression and multiplicative expression) in 'when condition'.
+ * HELPERS: basicTypes, classes, functions
  */
 
 // TESTCASE NUMBER: 1

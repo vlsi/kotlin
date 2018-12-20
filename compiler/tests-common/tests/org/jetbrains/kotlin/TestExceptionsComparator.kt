@@ -12,24 +12,30 @@ import java.lang.Error
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-enum class TestsExceptionFilePostfix(val text: String) {
+enum class TestsExceptionType(val postfix: String) {
     COMPILER_ERROR("compiler"),
     COMPILETIME_ERROR("compiletime"),
     RUNTIME_ERROR("runtime"),
-    INFRASTRUCTURE_ERROR("infrastructure")
+    INFRASTRUCTURE_ERROR("infrastructure");
+
+    companion object {
+        private val map = values().associateBy(TestsExceptionType::postfix)
+
+        fun fromValue(type: String) = map[type]
+    }
 }
 
-sealed class TestsError(val original: Throwable, val postfix: TestsExceptionFilePostfix) : Error() {
+sealed class TestsError(val original: Throwable, val type: TestsExceptionType) : Error() {
     override fun toString() = original.toString()
     override fun getStackTrace() = original.stackTrace
     override fun initCause(cause: Throwable?) = original.initCause(cause)
     override val cause = original.cause
 }
 
-class TestsCompilerError(original: Throwable) : TestsError(original, TestsExceptionFilePostfix.COMPILER_ERROR)
-class TestsInfrastructureError(original: Throwable) : TestsError(original, TestsExceptionFilePostfix.INFRASTRUCTURE_ERROR)
-class TestsCompiletimeError(original: Throwable) : TestsError(original, TestsExceptionFilePostfix.COMPILETIME_ERROR)
-class TestsRuntimeError(original: Throwable) : TestsError(original, TestsExceptionFilePostfix.RUNTIME_ERROR)
+class TestsCompilerError(original: Throwable) : TestsError(original, TestsExceptionType.COMPILER_ERROR)
+class TestsInfrastructureError(original: Throwable) : TestsError(original, TestsExceptionType.INFRASTRUCTURE_ERROR)
+class TestsCompiletimeError(original: Throwable) : TestsError(original, TestsExceptionType.COMPILETIME_ERROR)
+class TestsRuntimeError(original: Throwable) : TestsError(original, TestsExceptionType.RUNTIME_ERROR)
 
 private enum class ExceptionType {
     ANALYZING_EXPRESSION,
@@ -59,41 +65,33 @@ class TestExceptionsComparator(wholeFile: File) {
         return null
     }
 
-    private fun getExceptionInfo(e: TestsError, cases: Set<Int>?): String {
-        val casesAsString = cases?.run { "CASES: " + joinToString() + ls } ?: ""
-
-        return when (e) {
-            is TestsRuntimeError ->
-                (e.original.cause ?: e.original).run {
-                    casesAsString + toString() + stackTrace[0]?.let { ls + it }
-                }
-            is TestsCompilerError, is TestsCompiletimeError, is TestsInfrastructureError -> casesAsString + (e.original.cause ?: e.original).toString()
-        }
+    private fun getExceptionInfo(e: TestsError) = when (e) {
+        is TestsRuntimeError ->
+            (e.original.cause ?: e.original).run {
+                toString() + stackTrace[0]?.let { ls + it }
+            }
+        is TestsCompilerError, is TestsCompiletimeError, is TestsInfrastructureError -> (e.original.cause ?: e.original).toString()
     }
 
     private fun validateExistingExceptionFiles(e: TestsError?) {
-        val postfixesOfFilesToCheck = TestsExceptionFilePostfix.values().toMutableSet().filter { it != e?.postfix }
+        val postfixesOfFilesToCheck = TestsExceptionType.values().toMutableSet().filter { it != e?.type }
 
         postfixesOfFilesToCheck.forEach {
-            if (File("$filePathPrefix.${it.text}.txt").exists())
-                Assert.fail("No $it, but file $filePathPrefix.${it.text}.txt exists.")
+            if (File("$filePathPrefix.${it.postfix}.txt").exists())
+                Assert.fail("No $it, but file $filePathPrefix.${it.postfix}.txt exists.")
         }
     }
 
-    fun runAndCompareWithExpected(checkUnexpectedBehaviour: ((Matcher?) -> Pair<Boolean, Set<Int>?>)? = null, runnable: () -> Unit) {
+    fun run(exception: TestsExceptionType, runnable: () -> Unit) {
         try {
             runnable()
         } catch (e: TestsError) {
-            val exceptionInfo = analyze(e.original)
-            val unexpectedBehaviourCheckResult = checkUnexpectedBehaviour?.invoke(exceptionInfo)
+            if (e.type != exception) throw e
 
-            if (e is TestsCompilerError && unexpectedBehaviourCheckResult?.first == false)
-                throw e.original
-
-            val exceptionsFile = File("$filePathPrefix.${e.postfix.text}.txt")
+            val exceptionsFile = File("$filePathPrefix.${e.type.postfix}.txt")
 
             try {
-                KotlinTestUtils.assertEqualsToFile(exceptionsFile, getExceptionInfo(e, unexpectedBehaviourCheckResult?.second))
+                KotlinTestUtils.assertEqualsToFile(exceptionsFile, getExceptionInfo(e))
             } catch (t: AssertionError) {
                 e.original.printStackTrace()
                 throw t
@@ -103,6 +101,6 @@ class TestExceptionsComparator(wholeFile: File) {
             validateExistingExceptionFiles(e)
             return
         }
-        validateExistingExceptionFiles(null)
+        throw IllegalArgumentException()
     }
 }

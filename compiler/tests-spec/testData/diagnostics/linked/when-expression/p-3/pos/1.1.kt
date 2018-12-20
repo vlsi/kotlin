@@ -1,7 +1,4 @@
 // !DIAGNOSTICS: -UNUSED_EXPRESSION -DEBUG_INFO_SMARTCAST
-// !WITH_BASIC_TYPES
-// !WITH_CLASSES
-// !WITH_FUNCTIONS
 
 /*
  * KOTLIN DIAGNOSTICS SPEC TEST (POSITIVE)
@@ -10,6 +7,7 @@
  * PLACE: when-expression -> paragraph 3 -> sentence 1
  * NUMBER: 1
  * DESCRIPTION: 'When' without bound value and with different variants of expressions in the control structure body.
+ * HELPERS: basicTypes, classes, functions
  */
 
 // TESTCASE NUMBER: 1

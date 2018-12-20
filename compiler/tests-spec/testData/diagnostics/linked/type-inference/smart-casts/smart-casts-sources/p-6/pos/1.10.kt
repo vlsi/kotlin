@@ -1,6 +1,5 @@
 // !LANGUAGE: +NewInference
 // !DIAGNOSTICS: -UNUSED_EXPRESSION
-// !WITH_CLASSES_WITH_PROJECTIONS
 // SKIP_TXT
 
 /*
@@ -10,6 +9,7 @@
  * PLACE: type-inference, smart-casts, smart-casts-sources -> paragraph 6 -> sentence 1
  * NUMBER: 10
  * DESCRIPTION: Nullability condition, if, complex types with projections
+ * HELPERS: classesWithProjections
  */
 
 // TESTCASE NUMBER: 1
@@ -20,6 +20,7 @@ fun case_1() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -31,6 +32,7 @@ fun case_2() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -42,6 +44,7 @@ fun case_3() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -53,6 +56,7 @@ fun case_4() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -64,6 +68,7 @@ fun case_5() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any & kotlin.Any?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & kotlin.Any"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -75,6 +80,7 @@ fun case_6() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any & kotlin.Any?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & kotlin.Any"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -86,6 +92,7 @@ fun case_7() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -97,6 +104,7 @@ fun case_8() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -108,6 +116,7 @@ fun case_9() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -119,6 +128,7 @@ fun case_10() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -130,6 +140,7 @@ fun case_11() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -141,6 +152,7 @@ fun case_12() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -156,9 +168,11 @@ fun case_13() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?> & kotlin.collections.List<kotlin.Int?>?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>? & kotlin.collections.List<kotlin.Int?>"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         val y = <!DEBUG_INFO_SMARTCAST!>x<!>[0]
         if (y != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
         }
     }
 }
@@ -171,9 +185,11 @@ fun case_14() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?> & kotlin.collections.List<kotlin.Int?>?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>? & kotlin.collections.List<kotlin.Int?>"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         val y = <!DEBUG_INFO_SMARTCAST!>x<!>[0]
         if (y != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
         }
     }
 }
@@ -186,9 +202,11 @@ fun case_15() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?> & kotlin.collections.List<kotlin.Int?>?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>? & kotlin.collections.List<kotlin.Int?>"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         val y = <!DEBUG_INFO_SMARTCAST!>x<!>[0]
         if (y != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
         }
     }
 }
@@ -205,9 +223,11 @@ fun case_16() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?> & kotlin.collections.List<kotlin.Int?>?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>? & kotlin.collections.List<kotlin.Int?>"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         val y = <!DEBUG_INFO_SMARTCAST!>x<!>[0]
         if (y != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
         }
     }
 }
@@ -220,9 +240,11 @@ fun case_17() {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?> & kotlin.collections.List<kotlin.Int?>?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>? & kotlin.collections.List<kotlin.Int?>"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         val y = <!DEBUG_INFO_SMARTCAST!>x<!>[0]
         if (y != null) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
         }
     }
 }
@@ -238,9 +260,11 @@ fun case_18() {
     val x = case_18_1(mutableListOf(1), listOf(1))
 
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>")!>x<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>")!>x<!>.equals(x)
     val y = x[0]
     if (y != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
     }
 }
 
@@ -251,9 +275,11 @@ fun case_19() {
     val x = case_19_1(mutableListOf(1), listOf(null))
 
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>")!>x<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.collections.List<kotlin.Int?>")!>x<!>.equals(x)
     val y = x[0]
     if (y != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>y<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>y<!>.equals(y)
     }
 }
 
@@ -265,6 +291,7 @@ fun case_20(y: Int?) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -276,6 +303,7 @@ fun case_21(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -287,6 +315,7 @@ fun case_22(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -298,6 +327,7 @@ fun case_23(y: Int?) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -309,6 +339,7 @@ fun case_24(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -321,6 +352,7 @@ fun case_25(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -337,5 +369,6 @@ fun case_26(y: Int) {
 
     if (x != null) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }

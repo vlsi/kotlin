@@ -1791,3 +1791,30 @@ fun <T : Nothing?> T.case_64() {
         }
     }
 }
+
+/*
+ * TESTCASE NUMBER: 65
+ * UNEXPECTED BEHAVIOUR
+ * ISSUES: KT-28785
+ */
+interface A65 { fun test() }
+interface B65 { fun test() }
+
+fun <T> T.case_65() {
+    if (this is A65?) {
+        if (this is B65?) {
+            if (this != null) {
+                <!DEBUG_INFO_EXPRESSION_TYPE("T")!>this<!>
+                <!DEBUG_INFO_EXPRESSION_TYPE("A65"), DEBUG_INFO_SMARTCAST!>this<!>.equals(<!UNRESOLVED_REFERENCE!>x<!>)
+                apply {
+                    <!DEBUG_INFO_EXPRESSION_TYPE("{A65 & B65 & T!!}"), DEBUG_INFO_EXPRESSION_TYPE("{A65 & B65 & T!!}")!>this<!>
+                    <!DEBUG_INFO_EXPRESSION_TYPE("{A65 & B65 & T!!}")!>this<!>.equals(this)
+                }
+                also {
+                    <!DEBUG_INFO_EXPRESSION_TYPE("{A65 & B65 & T!!}")!>it<!>
+                    <!DEBUG_INFO_EXPRESSION_TYPE("{A65 & B65 & T!!}")!>it<!>.equals(it)
+                }
+            }
+        }
+    }
+}

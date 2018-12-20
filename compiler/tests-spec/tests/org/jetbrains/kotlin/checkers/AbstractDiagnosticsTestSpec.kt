@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.checkers
 
+import com.intellij.openapi.util.io.FileUtil
 import org.jetbrains.kotlin.TestExceptionsComparator
 import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.descriptors.impl.ModuleDescriptorImpl
@@ -18,23 +19,9 @@ import org.jetbrains.kotlin.test.*
 import org.junit.Assert
 import java.io.File
 import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
     companion object {
-        // map of pairs: source helper filename - target helper filename
-        private val directives = mapOf(
-            "WITH_BASIC_TYPES" to "basicTypes.kt",
-            "WITH_CLASSES_WITH_PROJECTIONS" to "classesWithProjections.kt",
-            "WITH_CLASSES" to "classes.kt",
-            "WITH_ENUM_CLASSES" to "enumClasses.kt",
-            "WITH_SEALED_CLASSES" to "sealedClasses.kt",
-            "WITH_FUNCTIONS" to "functions.kt",
-            "WITH_OBJECTS" to "objects.kt",
-            "WITH_TYPEALIASES" to "typeAliases.kt",
-            "WITH_CONTRACT_FUNCTIONS" to "contractFunctions.kt"
-        )
-
         private val withoutDescriptorsTestGroups = listOf(
             "linked/when-expression"
         )
@@ -66,13 +53,14 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
     override fun getKtFiles(testFiles: List<TestFile>, includeExtras: Boolean): List<KtFile> {
         val ktFiles = super.getKtFiles(testFiles, includeExtras) as ArrayList
 
-        if (includeExtras) {
-            for ((name, filename) in directives) {
-                if (checkDirective(name, testFiles)) {
-                    val declarations = File("$HELPERS_PATH/$filename").readText()
-                    ktFiles.add(KotlinTestUtils.createFile(filename, declarations, project))
-                }
-            }
+        if (specTest.helpers == null) return ktFiles
+
+        specTest.helpers?.forEach {
+            val filename = "$it.kt"
+            val helperContent = FileUtil.loadFile(File("$HELPERS_PATH/$filename"), true)
+            ktFiles.add(
+                KotlinTestUtils.createFile(filename, helperContent, project)
+            )
         }
 
         return ktFiles
@@ -105,8 +93,12 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
             return@l Pair(testCasesWithSamePosition.all { it.value.unexpectedBehavior }, testCasesWithSamePosition.keys.toSet())
         }
 
-        TestExceptionsComparator(testDataFile).runAndCompareWithExpected(checkUnexpectedBehaviour) {
+        if (specTest.exception == null) {
             super.analyzeAndCheck(testDataFile, files)
+        } else {
+            TestExceptionsComparator(testDataFile).run(specTest.exception!!) {
+                super.analyzeAndCheck(testDataFile, files)
+            }
         }
     }
 

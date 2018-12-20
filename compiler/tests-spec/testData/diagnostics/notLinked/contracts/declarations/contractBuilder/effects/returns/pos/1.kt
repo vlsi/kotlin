@@ -1,6 +1,5 @@
 // !USE_EXPERIMENTAL: kotlin.contracts.ExperimentalContracts
 // !DIAGNOSTICS: -FINAL_UPPER_BOUND
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS NOT LINKED SPEC TEST (POSITIVE)
@@ -8,6 +7,7 @@
  * SECTIONS: contracts, declarations, contractBuilder, effects, returns
  * NUMBER: 1
  * DESCRIPTION: Returns effect with simple conditions.
+ * HELPERS: classes
  */
 
 import kotlin.contracts.*

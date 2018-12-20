@@ -1,5 +1,4 @@
 // !USE_EXPERIMENTAL: kotlin.contracts.ExperimentalContracts
-// !WITH_CLASSES
 
 /*
  * KOTLIN DIAGNOSTICS NOT LINKED SPEC TEST (NEGATIVE)
@@ -8,6 +7,7 @@
  * NUMBER: 2
  * DESCRIPTION: Check report about use contracts in literal functions, lambdas or not top-level functions.
  * ISSUES: KT-26149
+ * HELPERS: classes
  */
 
 import kotlin.contracts.*
