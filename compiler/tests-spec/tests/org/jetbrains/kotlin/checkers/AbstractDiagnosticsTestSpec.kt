@@ -78,9 +78,8 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
 
         println(specTest)
 
-        val checkUnexpectedBehaviour: (Matcher?) -> Pair<Boolean, Set<Int>?> = l@{ matches ->
-            if (specTest.unexpectedBehavior) return@l Pair(true, null)
-            if (matches == null) return@l Pair(false, null)
+        val computeExceptionPoint: (Matcher?) -> Set<Int>? = l@{ matches ->
+            if (matches == null) return@l null
 
             val lineNumber = matches.group("lineNumber").toInt()
             val symbolNumber = matches.group("symbolNumber").toInt()
@@ -90,13 +89,13 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
             val testCases = specTest.cases.byRanges[filename]
             val testCasesWithSamePosition = testCases!!.floorEntry(exceptionPosition).value
 
-            return@l Pair(testCasesWithSamePosition.all { it.value.unexpectedBehavior }, testCasesWithSamePosition.keys.toSet())
+            return@l testCasesWithSamePosition.keys.toSet()
         }
 
         if (specTest.exception == null) {
             super.analyzeAndCheck(testDataFile, files)
         } else {
-            TestExceptionsComparator(testDataFile).run(specTest.exception!!) {
+            TestExceptionsComparator(testDataFile).run(specTest.exception!!, computeExceptionPoint) {
                 super.analyzeAndCheck(testDataFile, files)
             }
         }

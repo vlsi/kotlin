@@ -65,12 +65,16 @@ class TestExceptionsComparator(wholeFile: File) {
         return null
     }
 
-    private fun getExceptionInfo(e: TestsError) = when (e) {
-        is TestsRuntimeError ->
-            (e.original.cause ?: e.original).run {
-                toString() + stackTrace[0]?.let { ls + it }
-            }
-        is TestsCompilerError, is TestsCompiletimeError, is TestsInfrastructureError -> (e.original.cause ?: e.original).toString()
+    private fun getExceptionInfo(e: TestsError, exceptionByCases: Set<Int>?): String {
+        val casesAsString = exceptionByCases?.run { "CASES: " + joinToString() + ls } ?: ""
+
+        return when (e) {
+            is TestsRuntimeError ->
+                (e.original.cause ?: e.original).run {
+                    casesAsString + toString() + stackTrace[0]?.let { ls + it }
+                }
+            is TestsCompilerError, is TestsCompiletimeError, is TestsInfrastructureError -> casesAsString + (e.original.cause ?: e.original).toString()
+        }
     }
 
     private fun validateExistingExceptionFiles(e: TestsError?) {
@@ -82,16 +86,30 @@ class TestExceptionsComparator(wholeFile: File) {
         }
     }
 
-    fun run(exception: TestsExceptionType, runnable: () -> Unit) {
+    fun run(
+        expectedException: TestsExceptionType?,
+        exceptionByCases: Map<Int, TestsExceptionType> = mapOf(),
+        computeExceptionPoint: ((Matcher?) -> Set<Int>?)? = null,
+        runnable: () -> Unit
+    ) {
         try {
             runnable()
         } catch (e: TestsError) {
-            if (e.type != exception) throw e
+            if (e.type != expectedException) throw e
+
+            val analyzeResult = analyze(e)
+            val casesWithExpectedException = computeExceptionPoint?.invoke(analyzeResult)?.filter {
+                exceptionByCases.containsKey(it) && exceptionByCases[it] == e.type
+            }?.toSet()
+
+            if (casesWithExpectedException == null || e.type != expectedException) {
+                throw e
+            }
 
             val exceptionsFile = File("$filePathPrefix.${e.type.postfix}.txt")
 
             try {
-                KotlinTestUtils.assertEqualsToFile(exceptionsFile, getExceptionInfo(e))
+                KotlinTestUtils.assertEqualsToFile(exceptionsFile, getExceptionInfo(e, casesWithExpectedException))
             } catch (t: AssertionError) {
                 e.original.printStackTrace()
                 throw t
