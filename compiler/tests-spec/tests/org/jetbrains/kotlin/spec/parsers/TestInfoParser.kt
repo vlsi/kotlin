@@ -57,6 +57,6 @@ fun parseTestInfo(testFilePath: String, testFiles: TestFiles, linkedTestType: Sp
         unexpectedBehavior = testInfoElements.contains(CommonInfoElementType.UNEXPECTED_BEHAVIOUR),
         issues = CommonParser.parseIssues(testInfoElements[CommonInfoElementType.ISSUES]),
         helpers = helpers,
-        exception = testInfoElements[CommonSpecTestFileInfoElementType.EXCEPTION]?.content?.let { TestsExceptionType.fromValue(it) }
+        exception = testInfoElements[CommonInfoElementType.EXCEPTION]?.content?.let { TestsExceptionType.fromValue(it) }
     )
 }

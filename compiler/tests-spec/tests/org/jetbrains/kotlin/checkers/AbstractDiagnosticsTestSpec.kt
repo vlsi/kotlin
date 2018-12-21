@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.checkers
 
 import com.intellij.openapi.util.io.FileUtil
 import org.jetbrains.kotlin.TestExceptionsComparator
+import org.jetbrains.kotlin.TestsExceptionType
 import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.descriptors.impl.ModuleDescriptorImpl
 import org.jetbrains.kotlin.psi.KtFile
@@ -92,12 +93,9 @@ abstract class AbstractDiagnosticsTestSpec : AbstractDiagnosticsTest() {
             return@l testCasesWithSamePosition.keys.toSet()
         }
 
-        if (specTest.exception == null) {
+        val exceptionsInCases = specTest.cases.byNumbers.entries.associate { it.key to it.value.exception }
+        TestExceptionsComparator(testDataFile).run(specTest.exception, exceptionsInCases, computeExceptionPoint) {
             super.analyzeAndCheck(testDataFile, files)
-        } else {
-            TestExceptionsComparator(testDataFile).run(specTest.exception!!, computeExceptionPoint) {
-                super.analyzeAndCheck(testDataFile, files)
-            }
         }
     }
 

@@ -23,7 +23,8 @@ enum class CommonInfoElementType(
     UNEXPECTED_BEHAVIOUR,
     ISSUES(valuePattern = issuesPattern),
     DISCUSSION,
-    NOTE
+    NOTE,
+    EXCEPTION
 }
 
 enum class CommonSpecTestFileInfoElementType(
@@ -32,8 +33,7 @@ enum class CommonSpecTestFileInfoElementType(
 ) : SpecTestInfoElementType {
     NUMBER(required = true),
     DESCRIPTION(required = true),
-    HELPERS,
-    EXCEPTION
+    HELPERS
 }
 
 enum class SpecTestCaseInfoElementType(

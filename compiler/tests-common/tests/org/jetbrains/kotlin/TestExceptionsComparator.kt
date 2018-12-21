@@ -88,21 +88,18 @@ class TestExceptionsComparator(wholeFile: File) {
 
     fun run(
         expectedException: TestsExceptionType?,
-        exceptionByCases: Map<Int, TestsExceptionType> = mapOf(),
+        exceptionByCases: Map<Int, TestsExceptionType?> = mapOf(),
         computeExceptionPoint: ((Matcher?) -> Set<Int>?)? = null,
         runnable: () -> Unit
     ) {
         try {
             runnable()
         } catch (e: TestsError) {
-            if (e.type != expectedException) throw e
+            val analyzeResult = analyze(e.original)
+            val casesWithExpectedException =
+                computeExceptionPoint?.invoke(analyzeResult)?.filter { exceptionByCases[it] == e.type }?.toSet()
 
-            val analyzeResult = analyze(e)
-            val casesWithExpectedException = computeExceptionPoint?.invoke(analyzeResult)?.filter {
-                exceptionByCases.containsKey(it) && exceptionByCases[it] == e.type
-            }?.toSet()
-
-            if (casesWithExpectedException == null || e.type != expectedException) {
+            if (casesWithExpectedException == null && e.type != expectedException) {
                 throw e
             }
 
@@ -117,8 +114,7 @@ class TestExceptionsComparator(wholeFile: File) {
 
             e.original.printStackTrace()
             validateExistingExceptionFiles(e)
-            return
         }
-        throw IllegalArgumentException()
+        validateExistingExceptionFiles(null)
     }
 }

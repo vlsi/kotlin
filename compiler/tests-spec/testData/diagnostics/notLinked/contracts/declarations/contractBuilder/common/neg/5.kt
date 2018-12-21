@@ -7,7 +7,6 @@
  * SECTIONS: contracts, declarations, contractBuilder, common
  * NUMBER: 5
  * DESCRIPTION: contracts with not allowed expressions in implies.
- * EXCEPTION: compiler
  */
 
 import kotlin.contracts.*
@@ -34,6 +33,7 @@ fun case_3(): Boolean {
  * TESTCASE NUMBER: 4
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-26386
+ * EXCEPTION: compiler
  */
 fun case_4(): Boolean? {
     contract { returns(null) implies case_4() }
