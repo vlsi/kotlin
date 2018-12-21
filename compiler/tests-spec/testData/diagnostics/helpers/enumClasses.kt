@@ -7,3 +7,15 @@ enum class _EnumClassSingle {
 }
 
 enum class _EnumClassEmpty
+
+enum class _EnumClassWithNullableProperty(val prop_1: Int?) {
+    A(1),
+    B(5),
+    D(null)
+}
+
+enum class _EnumClassWithProperty(val prop_1: Int) {
+    A(1),
+    B(5),
+    D(6)
+}

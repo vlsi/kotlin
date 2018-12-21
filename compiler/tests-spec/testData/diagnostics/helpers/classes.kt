@@ -3,7 +3,7 @@ class _Class {
     val prop_2 = 2
     val prop_3 = 3
     val prop_4: Float? = 3f
-    val prop_5: Float? = 3f
+    val prop_5: Float = 3f
 
     fun fun_1(): (Int) -> (Int) -> Int = {number: Int -> { number * 5 }}
     fun fun_2(value_1: Int): Int = value_1 * 2
@@ -29,9 +29,21 @@ class _ClassWithCompanionObject {
     companion object {}
 }
 
-open class _ClassLevel1 {}
-open class _ClassLevel2: _ClassLevel1() {}
-open class _ClassLevel3: _ClassLevel2() {}
-open class _ClassLevel4: _ClassLevel3() {}
-open class _ClassLevel5: _ClassLevel4() {}
-class _ClassLevel6: _ClassLevel5() {}
+open class _ClassLevel1 {
+    fun test1() {}
+}
+open class _ClassLevel2: _ClassLevel1() {
+    fun test2() {}
+}
+open class _ClassLevel3: _ClassLevel2() {
+    fun test3() {}
+}
+open class _ClassLevel4: _ClassLevel3() {
+    fun test4() {}
+}
+open class _ClassLevel5: _ClassLevel4() {
+    fun test5() {}
+}
+class _ClassLevel6: _ClassLevel5() {
+    fun test6() {}
+}

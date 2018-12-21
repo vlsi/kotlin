@@ -10,70 +10,19 @@
  * NUMBER: 6
  * DESCRIPTION: null from variables
  * UNEXPECTED BEHAVIOUR
+ * HELPERS: classes, enumClasses, interfaces, objects, typealiases, properties
  */
 
 // FILE: other_types.kt
 
 package othertypes
 
-// TESTCASE NUMBER: 13
-class A {}
-
-// TESTCASE NUMBER: 14
-typealias B = String?
-
-// TESTCASE NUMBER: 16
-typealias C = Nothing
+// TESTCASE NUMBER: 12, 48
+class _EmptyClass12_48 {}
 
 // FILE: main.kt
 
 import othertypes.*
-
-// TESTCASE NUMBER: 6
-class A {}
-
-// TESTCASE NUMBER: 7
-object B {}
-
-// TESTCASE NUMBER: 8
-typealias C = String?
-
-// TESTCASE NUMBER: 10
-typealias D = Float
-
-// TESTCASE NUMBER: 11
-typealias E = C
-
-// TESTCASE NUMBER: 15
-typealias F = othertypes.B
-
-// TESTCASE NUMBER: 16
-typealias G = othertypes.C?
-
-// TESTCASE NUMBER: 65, 66, 67, 68, 69, 70, 73, 74
-open class A2 {
-    fun t1() {}
-}
-open class B2: A2() {
-    fun t2() {}
-}
-open class C2: B2() {}
-open class D2: C2() {}
-open class E2: D2() {}
-
-// TESTCASE NUMBER: 71, 72, 73, 74
-interface L1 {
-    fun g() {}
-    fun g1() {}
-}
-interface L2 {
-    fun g() {}
-    fun g2() {}
-}
-interface L3 {
-    fun g() {}
-    fun g3() {}
-}
 
 // TESTCASE NUMBER: 1
 fun case_1(x: Any?) {
@@ -98,17 +47,13 @@ fun case_2(x: Nothing?) {
 }
 
 // TESTCASE NUMBER: 3
-object A3 {
-    val x: Number? = null
-}
-
 fun case_3() {
     val y = null
 
-    if (A3.x == <!DEBUG_INFO_CONSTANT!>y<!>)
+    if (_Object.prop_1 == <!DEBUG_INFO_CONSTANT!>y<!>)
     else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>A3.x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>A3.x<!>.equals(A3.x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>_Object.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>_Object.prop_1<!>.equals(_Object.prop_1)
     }
 }
 
@@ -132,79 +77,74 @@ fun case_5() {
 }
 
 // TESTCASE NUMBER: 6
-fun case_6(x: A?, z: Nothing?) {
+fun case_6(x: _EmptyClass?, z: Nothing?) {
     val y = true
 
     if (x != <!DEBUG_INFO_CONSTANT!>z<!> && !y) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A & A?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A? & A"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass & _EmptyClass?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass? & _EmptyClass"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 7
-val x7: B? = null
+val case_7_x: _EmptyObject? = null
 
 fun case_7() {
     val y = null
 
-    if (x7 != <!DEBUG_INFO_CONSTANT!>y<!> || <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("B? & kotlin.Nothing?")!>x7<!> != <!DEBUG_INFO_CONSTANT!>y<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("B & B?")!>x7<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("B? & B"), DEBUG_INFO_SMARTCAST!>x7<!>.equals(x7)
+    if (case_7_x != <!DEBUG_INFO_CONSTANT!>y<!> || <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject? & kotlin.Nothing?")!>case_7_x<!> != <!DEBUG_INFO_CONSTANT!>y<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject & _EmptyObject?")!>case_7_x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject? & _EmptyObject"), DEBUG_INFO_SMARTCAST!>case_7_x<!>.equals(case_7_x)
     }
 }
 
 // TESTCASE NUMBER: 8
-fun case_8(x: C) {
+fun case_8(x: _TypeAliasNullableString) {
     val y = null
 
-    if (x !== <!DEBUG_INFO_CONSTANT!>y<!> && <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C /* = kotlin.String? */")!>x<!> != <!DEBUG_INFO_CONSTANT!>y<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String? */ & C /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    if (x !== <!DEBUG_INFO_CONSTANT!>y<!> && <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString /* = kotlin.String? */")!>x<!> != <!DEBUG_INFO_CONSTANT!>y<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & _TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 9
-fun case_9(x: C<!REDUNDANT_NULLABLE!>?<!>, y: Nothing?) {
+fun case_9(x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>, y: Nothing?) {
     if (x === <!DEBUG_INFO_CONSTANT!>y<!>) {
 
     } else if (false) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String */ & C? /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("C? /* = kotlin.String? */ & C /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString? /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & _TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 10
-class A10 {
-    val x: D? = null
-}
-
 fun case_10() {
-    val a = A10()
+    val a = _Class()
     val b = null
 
-    if (a.x === <!DEBUG_INFO_CONSTANT!>b<!> || true) {
-        if (a.x != null) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */ & D? /* = kotlin.Float? */")!>a.x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("D /* = kotlin.Float */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
+    if (a.prop_4 === <!DEBUG_INFO_CONSTANT!>b<!> || true) {
+        if (a.prop_4 != null) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float & kotlin.Float?")!>a.prop_4<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float"), DEBUG_INFO_SMARTCAST!>a.prop_4<!>.equals(a.prop_4)
         }
     }
 }
 
 // TESTCASE NUMBER: 11
-val x11: E = null
-fun case_11(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
-    val t: E = null
+fun case_11(x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>, y: _TypeAliasNullableString) {
     val z = null
-    val g = null
+    val u: _TypeAliasNullableString = null
+    val v = null
 
-    if (x == <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT!>x<!> == <!DEBUG_INFO_CONSTANT!>g<!>) {
+    if (x == <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT!>x<!> == <!DEBUG_INFO_CONSTANT!>v<!>) {
 
     } else {
         if (y != <!DEBUG_INFO_CONSTANT!>z<!>) {
-            if (x11 == <!DEBUG_INFO_CONSTANT!>z<!>) {
-                if (t != <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>t<!> != <!DEBUG_INFO_CONSTANT!>g<!>) {
-                    <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String */ & E? /* = kotlin.String? */")!>x<!>
-                    <!DEBUG_INFO_EXPRESSION_TYPE("E? /* = kotlin.String? */ & E /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+            if (nullableStringProperty == <!DEBUG_INFO_CONSTANT!>z<!>) {
+                if (u != <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>u<!> != <!DEBUG_INFO_CONSTANT!>v<!>) {
+                    <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString? /* = kotlin.String? */")!>x<!>
+                    <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & _TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
                 }
             }
         }
@@ -212,97 +152,74 @@ fun case_11(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
 }
 
 // TESTCASE NUMBER: 12
-fun case_12(x: E, y: E, z1: Nothing?, z2: Nothing?) = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x == <!DEBUG_INFO_CONSTANT!>z1<!> || x == <!DEBUG_INFO_CONSTANT!>z2<!>) "1"
+fun case_12(x: _TypeAliasNullableString, y: _TypeAliasNullableString, z1: Nothing?, z2: Nothing?) = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x == <!DEBUG_INFO_CONSTANT!>z1<!> || x == <!DEBUG_INFO_CONSTANT!>z2<!>) "1"
     else if (y === <!DEBUG_INFO_CONSTANT!>z1<!> && <!DEBUG_INFO_CONSTANT!>y<!> == <!DEBUG_INFO_CONSTANT!>z2<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String */ & E /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String? */ & E /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & _TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     } else "-1"<!>
 
 // TESTCASE NUMBER: 13
-fun case_13(x: othertypes.A?, z: Nothing?) =
+fun case_13(x: _EmptyClass12_48?, z: Nothing?) =
     if (x == <!DEBUG_INFO_CONSTANT!>z<!> || x === <!DEBUG_INFO_CONSTANT!>z<!> && x == <!DEBUG_INFO_CONSTANT!>z<!>) {
         throw Exception()
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.A & othertypes.A?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.A? & othertypes.A"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes._EmptyClass12_48 & othertypes._EmptyClass12_48?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes._EmptyClass12_48? & othertypes._EmptyClass12_48"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 
 // TESTCASE NUMBER: 14
-class A14 {
-    val x: othertypes.B<!REDUNDANT_NULLABLE!>?<!>
+class Case14 {
+    val x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>
     init {
-        x = othertypes.B()
+        x = _TypeAliasNullableString()
     }
 }
 
 fun case_14() {
-    val a = A14()
-    val z1 = null
-    val z2 = <!DEBUG_INFO_CONSTANT!>z1<!>
+    val a = Case14()
+    val x = null
+    val y = <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>
 
-    if (a.x != <!DEBUG_INFO_CONSTANT!>z1<!> && a.x != <!DEBUG_INFO_CONSTANT!>z2<!> || a.x != <!DEBUG_INFO_CONSTANT!>z2<!> && <!SENSELESS_COMPARISON!>a.x !== null<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */ & othertypes.B? /* = kotlin.String? */")!>a.x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
+    if (a.x != <!DEBUG_INFO_CONSTANT!>x<!> && a.x != <!DEBUG_INFO_CONSTANT!>y<!> || a.x != <!DEBUG_INFO_CONSTANT!>y<!> && <!SENSELESS_COMPARISON!>a.x !== null<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString? /* = kotlin.String? */")!>a.x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
     }
 }
 
 // TESTCASE NUMBER: 15
-fun case_15(x: F) {
-    val z = null
-    val <!UNUSED_VARIABLE!>t<!> = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x === null || <!DEBUG_INFO_CONSTANT!>z<!> == x && x === <!DEBUG_INFO_CONSTANT!>z<!> || <!SENSELESS_COMPARISON!>null === x<!>) "" else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("F /* = kotlin.String */ & F /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("F /* = kotlin.String? */ & F /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+fun case_15(x: _TypeAliasNullableString) {
+    val y = null
+    val <!UNUSED_VARIABLE!>z<!> = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x === null || <!DEBUG_INFO_CONSTANT!>y<!> == x && x === <!DEBUG_INFO_CONSTANT!>y<!> || <!SENSELESS_COMPARISON!>null === x<!>) "" else {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String */ & _TypeAliasNullableString /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & _TypeAliasNullableString /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }<!>
 }
 
 // TESTCASE NUMBER: 16
 fun case_16() {
-    val x: G = null
-    val z: Nothing? = null
+    val x: _TypeAliasNullableNothing = null
+    val y: Nothing? = null
 
-    if (<!DEBUG_INFO_CONSTANT!>x<!> !== <!DEBUG_INFO_CONSTANT!>z<!>) {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("G /* = kotlin.Nothing? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("G /* = kotlin.Nothing? */")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+    if (<!DEBUG_INFO_CONSTANT!>x<!> !== <!DEBUG_INFO_CONSTANT!>y<!>) {
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableNothing /* = kotlin.Nothing? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableNothing /* = kotlin.Nothing? */")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
 // TESTCASE NUMBER: 17
-val x17: Int? = 1
-val z17 = null
-
-val case_17 = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & Byte & Int & Long & Short}> & java.io.Serializable}")!>if (x17 === <!DEBUG_INFO_CONSTANT!>z17<!>) 0 else {
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x17<!>
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x17<!>.equals(x17)
+val case_17 = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & Byte & Int & Long & Short}> & java.io.Serializable}")!>if (nullableIntProperty === <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) 0 else {
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>nullableIntProperty<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>nullableIntProperty<!>.equals(nullableIntProperty)
 }<!>
 
 //TESTCASE NUMBER: 18
-object A18 {
-    object B18 {
-        object C18 {
-            object D18 {
-                object E18 {
-                    object F18 {
-                        object G18 {
-                            object H18 {
-                                object I18 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+fun case_18(a: _DeepObject.A.B.C.D.E.F.G.J?, b: Boolean) {
+    val x = null
+    val y = null
 
-fun case_18(a: A18.B18.C18.D18.E18.F18.G18.H18.I18?, b: Boolean) {
-    val z1 = null
-    val z2 = null
-
-    if (a != (if (b) <!DEBUG_INFO_CONSTANT!>z1<!> else <!DEBUG_INFO_CONSTANT!>z2<!>) || <!DEBUG_INFO_CONSTANT!>z1<!> !== <!DEBUG_INFO_CONSTANT!>a<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A18.B18.C18.D18.E18.F18.G18.H18.I18 & A18.B18.C18.D18.E18.F18.G18.H18.I18?")!>a<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A18.B18.C18.D18.E18.F18.G18.H18.I18? & A18.B18.C18.D18.E18.F18.G18.H18.I18"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+    if (a != (if (b) <!DEBUG_INFO_CONSTANT!>x<!> else <!DEBUG_INFO_CONSTANT!>y<!>) || <!DEBUG_INFO_CONSTANT!>x<!> !== <!DEBUG_INFO_CONSTANT!>a<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J & _DeepObject.A.B.C.D.E.F.G.J?")!>a<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     }
 }
 
@@ -334,56 +251,44 @@ fun case_19(b: Boolean) {
 }
 
 // TESTCASE NUMBER: 20
-fun case_20(b: Boolean, z: Nothing?) {
-    val a = object {
+fun case_20(x: Boolean, y: Nothing?) {
+    val z = object {
         val B19 = object {
             val C19 = object {
-                val D19 =  if (b) {
+                val D19 =  if (x) {
                     object {}
-                } else <!DEBUG_INFO_CONSTANT!>z<!>
+                } else <!DEBUG_INFO_CONSTANT!>y<!>
             }
         }
     }
 
-    if (a.B19.C19.D19 !== <!DEBUG_INFO_CONSTANT!>z<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided> & case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided>?")!>a.B19.C19.D19<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided>"), DEBUG_INFO_SMARTCAST!>a.B19.C19.D19<!>.equals(a.B19.C19.D19)
+    if (z.B19.C19.D19 !== <!DEBUG_INFO_CONSTANT!>y<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided> & case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided>?")!>z.B19.C19.D19<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("case_20.<no name provided>.B19.<no name provided>.C19.<no name provided>.D19.<no name provided>"), DEBUG_INFO_SMARTCAST!>z.B19.C19.D19<!>.equals(z.B19.C19.D19)
     }
 }
 
 // TESTCASE NUMBER: 21
-val z21 = null
-
-enum class A21(val c: Int?) {
-    A(1),
-    B(5),
-    D(<!DEBUG_INFO_CONSTANT!>z21<!>)
-}
-
 fun case_21() {
-    if (A21.B.c !== <!DEBUG_INFO_CONSTANT!>z21<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>A21.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>A21.B.c<!>.equals(A21.B.c)
+    if (_EnumClassWithNullableProperty.A.prop_1 !== <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>_EnumClassWithNullableProperty.A.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>_EnumClassWithNullableProperty.A.prop_1<!>.equals(_EnumClassWithNullableProperty.A.prop_1)
     }
 }
 
-var z22 = null
-
 // TESTCASE NUMBER: 22
 fun case_22(a: (() -> Unit)?) {
-    if (a != <!DEBUG_INFO_CONSTANT!>z22<!>) {
+    if (a != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Unit")!><!DEBUG_INFO_EXPRESSION_TYPE("(() -> kotlin.Unit)? & () -> kotlin.Unit"), DEBUG_INFO_SMARTCAST!>a<!>()<!>
         <!DEBUG_INFO_EXPRESSION_TYPE("(() -> kotlin.Unit)? & () -> kotlin.Unit"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     }
 }
 
 // TESTCASE NUMBER: 23
-var z23 = null
-
 fun case_23(a: ((Float) -> Int?)?, b: Float?, z: Nothing?) {
     if (a != <!DEBUG_INFO_CONSTANT!>z<!> && b !== <!DEBUG_INFO_CONSTANT!>z<!> && b !== <!DEBUG_INFO_CONSTANT!>z<!>) {
         val x = <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!><!DEBUG_INFO_EXPRESSION_TYPE("((kotlin.Float) -> kotlin.Int?)? & (kotlin.Float) -> kotlin.Int?"), DEBUG_INFO_SMARTCAST!>a<!>(<!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float & kotlin.Float?"), DEBUG_INFO_SMARTCAST!>b<!>)<!>
-        if (x != <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>x<!> !== <!DEBUG_INFO_CONSTANT!>z23<!>) {
+        if (x != <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>x<!> !== <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
@@ -399,8 +304,6 @@ fun case_24(a: ((() -> Unit) -> Unit)?, b: (() -> Unit)?, z: Nothing?) =
     } else <!DEBUG_INFO_CONSTANT!>z<!>
 
 // TESTCASE NUMBER: 25
-var z25 = null
-
 fun case_25(b: Boolean, z: Nothing?) {
     val x = {
         if (b) object {
@@ -410,10 +313,10 @@ fun case_25(b: Boolean, z: Nothing?) {
 
     val y = if (b) x else <!DEBUG_INFO_CONSTANT!>z<!>
 
-    if (y !== <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>y<!> != <!DEBUG_INFO_CONSTANT!>z25<!>) {
+    if (y !== <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>y<!> != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
         val z1 = <!DEBUG_INFO_EXPRESSION_TYPE("case_25.<anonymous>.<no name provided>?")!><!DEBUG_INFO_EXPRESSION_TYPE("(() -> case_25.<anonymous>.<no name provided>?)? & () -> case_25.<anonymous>.<no name provided>?"), DEBUG_INFO_SMARTCAST!>y<!>()<!>
 
-        if (z1 != <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT!>z25<!> !== z1) {
+        if (z1 != <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> !== z1) {
             <!DEBUG_INFO_EXPRESSION_TYPE("case_25.<anonymous>.<no name provided>? & case_25.<anonymous>.<no name provided>"), DEBUG_INFO_SMARTCAST!>z1<!>.a
             <!DEBUG_INFO_EXPRESSION_TYPE("case_25.<anonymous>.<no name provided>? & case_25.<anonymous>.<no name provided>"), DEBUG_INFO_SMARTCAST!>z1<!>.equals(z1)
         }
@@ -421,14 +324,12 @@ fun case_25(b: Boolean, z: Nothing?) {
 }
 
 // TESTCASE NUMBER: 26
-var z26 = null
-
 fun case_26(a: ((Float) -> Int?)?, b: Float?) {
     var z = null
 
-    if (a != <!DEBUG_INFO_CONSTANT!>z<!> == true && b != <!DEBUG_INFO_CONSTANT!>z26<!> == true) {
+    if (a != <!DEBUG_INFO_CONSTANT!>z<!> == true && b != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> == true) {
         val x = <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!><!DEBUG_INFO_EXPRESSION_TYPE("((kotlin.Float) -> kotlin.Int?)? & (kotlin.Float) -> kotlin.Int?"), DEBUG_INFO_SMARTCAST!>a<!>(<!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float & kotlin.Float?"), DEBUG_INFO_SMARTCAST!>b<!>)<!>
-        if (x != <!DEBUG_INFO_CONSTANT!>z26<!> == true || <!DEBUG_INFO_CONSTANT!>z<!> !== <!DEBUG_INFO_CONSTANT!>x<!>) {
+        if (x != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> == true || <!DEBUG_INFO_CONSTANT!>z<!> !== <!DEBUG_INFO_CONSTANT!>x<!>) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
@@ -437,40 +338,18 @@ fun case_26(a: ((Float) -> Int?)?, b: Float?) {
 
 // TESTCASE NUMBER: 27
 fun case_27(z: Nothing?) {
-    if (A3.x == <!DEBUG_INFO_CONSTANT!>z<!> == true == true == true == true == true == true == true == true == true == true == true == true == true == true)
+    if (_Object.prop_1 == <!DEBUG_INFO_CONSTANT!>z<!> == true == true == true == true == true == true == true == true == true == true == true == true == true == true)
     else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>A3.x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>A3.x<!>.equals(A3.x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number & kotlin.Number?")!>_Object.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number"), DEBUG_INFO_SMARTCAST!>_Object.prop_1<!>.equals(_Object.prop_1)
     }
 }
 
 // TESTCASE NUMBER: 28
-object A28 {
-    object B28 {
-        object C28 {
-            object D28 {
-                object E28 {
-                    object F28 {
-                        object G28 {
-                            object H28 {
-                                object I28 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-var z28 = null
-
-fun case_28(a: A28.B28.C28.D28.E28.F28.G28.H28.I28?) =
-    if (a != <!DEBUG_INFO_CONSTANT!>z28<!> == true == false == false == false == true == false == true == false == false == true == true) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A28.B28.C28.D28.E28.F28.G28.H28.I28? & A28.B28.C28.D28.E28.F28.G28.H28.I28"), DEBUG_INFO_SMARTCAST!>a<!>.x
-        <!DEBUG_INFO_EXPRESSION_TYPE("A28.B28.C28.D28.E28.F28.G28.H28.I28? & A28.B28.C28.D28.E28.F28.G28.H28.I28"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+fun case_28(a: _DeepObject.A.B.C.D.E.F.G.J?) =
+    if (a != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> == true == false == false == false == true == false == true == false == false == true == true) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.x
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     } else -1
 
 /*
@@ -478,33 +357,31 @@ fun case_28(a: A28.B28.C28.D28.E28.F28.G28.H28.I28?) =
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28328, KT-28329
  */
-fun case_29(b: Boolean) {
-    val z = null
-    val x = {
-        if (b) object {
+fun case_29(x: Boolean) {
+    val v = null
+    val z = {
+        if (x) object {
             val a = 10
         } else null
     }
 
-    val y = if (b) x else null
+    val y = if (x) z else null
 
-    if (false || false || false || false || y !== <!DEBUG_INFO_CONSTANT!>z<!>) {
-        val z1 = <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!><!UNSAFE_CALL!>y<!>()<!>
+    if (false || false || false || false || y !== <!DEBUG_INFO_CONSTANT!>v<!>) {
+        val t = <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!><!UNSAFE_CALL!>y<!>()<!>
 
-        if (<!DEBUG_INFO_CONSTANT!>z<!> !== z1 || false) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!>z1<!><!UNSAFE_CALL!>.<!>a
-            <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!>z1<!><!UNSAFE_CALL!>.<!>equals(z1)
+        if (<!EQUALITY_NOT_APPLICABLE!>z !== t<!> || false) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!>t<!><!UNSAFE_CALL!>.<!>a
+            <!DEBUG_INFO_EXPRESSION_TYPE("case_29.<anonymous>.<no name provided>?")!>t<!><!UNSAFE_CALL!>.<!>equals(t)
         }
     }
 }
 
 // TESTCASE NUMBER: 30
-var z30 = null
-
 fun case_30(a: ((Float) -> Int?)?, b: Float?) {
-    if (<!DEBUG_INFO_CONSTANT!>z30<!> != a == true && b != <!DEBUG_INFO_CONSTANT!>z30<!> == true || false || false || false || false || false || false || false || false || false) {
+    if (<!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> != a == true && b != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> == true || false || false || false || false || false || false || false || false || false) {
         val x = <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!><!DEBUG_INFO_EXPRESSION_TYPE("((kotlin.Float) -> kotlin.Int?)? & (kotlin.Float) -> kotlin.Int?"), DEBUG_INFO_SMARTCAST!>a<!>(<!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float & kotlin.Float?"), DEBUG_INFO_SMARTCAST!>b<!>)<!>
-        if (false || <!DEBUG_INFO_CONSTANT!>z30<!> != x == true) {
+        if (false || <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> != x == true) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>x<!>
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Int"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
@@ -512,48 +389,20 @@ fun case_30(a: ((Float) -> Int?)?, b: Float?) {
 }
 
 // TESTCASE NUMBER: 31
-enum class A31(val c: Int?) {
-    A(1),
-    B(5),
-    D(null)
-}
-
 fun case_31(z1: Boolean?, z: Nothing?) {
-    if (false || A31.B.c != <!DEBUG_INFO_CONSTANT!>z<!> && z1 !== <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_SMARTCAST!>z1<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>A31.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>A31.B.c<!>.equals(A31.B.c)
+    if (false || _EnumClassWithNullableProperty.A.prop_1 != <!DEBUG_INFO_CONSTANT!>z<!> && z1 !== <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_SMARTCAST!>z1<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>_EnumClassWithNullableProperty.A.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>_EnumClassWithNullableProperty.A.prop_1<!>.equals(_EnumClassWithNullableProperty.A.prop_1)
     }
 }
 
 // TESTCASE NUMBER: 32
-object A32 {
-    object B32 {
-        object C32 {
-            object D32 {
-                object E32 {
-                    object F32 {
-                        object G32 {
-                            object H32 {
-                                object I32 {
-                                    val x: Int? = 32
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-val z32 = null
-
-fun case_32(a: A32.B32.C32.D32.E32.F32.G32.H32.I32?) =
-    if (a == <!DEBUG_INFO_CONSTANT!>z32<!> == true == false == false == false == true == false == true == false == false == true == true && true) {
+fun case_32(a: _DeepObject.A.B.C.D.E.F.G.J?) =
+    if (a == <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> == true == false == false == false == true == false == true == false == false == true == true && true) {
         -1
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A32.B32.C32.D32.E32.F32.G32.H32.I32? & A32.B32.C32.D32.E32.F32.G32.H32.I32"), DEBUG_INFO_SMARTCAST!>a<!>.x
-        <!DEBUG_INFO_EXPRESSION_TYPE("A32.B32.C32.D32.E32.F32.G32.H32.I32? & A32.B32.C32.D32.E32.F32.G32.H32.I32"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.x
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     }
 
 // TESTCASE NUMBER: 33
@@ -578,56 +427,26 @@ fun case_33(a: ((Float) -> Int?)?, b: Float?, c: Boolean?) {
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28329
  */
-enum class A34(val c: Int?) {
-    A(1),
-    B(5),
-    D(null)
-}
-
-var z34 = null
-
 fun case_34(z1: Boolean?) {
     var z = null
 
-    if (true && true && true && true && A34.B.c != <!DEBUG_INFO_CONSTANT!>z34<!> && <!SENSELESS_COMPARISON!>A34.B.c !== null<!> && A34.B.c !== <!DEBUG_INFO_CONSTANT!>z<!> || z1 != <!DEBUG_INFO_CONSTANT!>z34<!> || <!ALWAYS_NULL!>z1<!>!! && true && true) {
+    if (true && true && true && true && _EnumClassWithNullableProperty.A.prop_1 != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> && <!SENSELESS_COMPARISON!>_EnumClassWithNullableProperty.A.prop_1 !== null<!> && _EnumClassWithNullableProperty.A.prop_1 !== <!DEBUG_INFO_CONSTANT!>z<!> || z1 != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> || <!ALWAYS_NULL!>z1<!>!! && true && true) {
 
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>A34.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>A34.B.c<!><!UNSAFE_CALL!>.<!>equals(A34.B.c)
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>_EnumClassWithNullableProperty.A.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>_EnumClassWithNullableProperty.A.prop_1<!><!UNSAFE_CALL!>.<!>equals(_EnumClassWithNullableProperty.A.prop_1)
     }
 }
 
 // TESTCASE NUMBER: 35
-object A35 {
-    object B35 {
-        object C35 {
-            object D35 {
-                object E35 {
-                    object F35 {
-                        object G35 {
-                            object H35 {
-                                object I35 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+fun case_35(a: _DeepObject.A.B.C.D.E.F.G.J?) {
+    val itest = false
 
-val z35 = null
-
-fun case_35(a: A35.B35.C35.D35.E35.F35.G35.H35.I35?) {
-    val g = false
-
-    if (true && a != <!DEBUG_INFO_CONSTANT!>z35<!> && a !== <!DEBUG_INFO_CONSTANT!>z35<!> || g || !g || true || !true) {
+    if (true && a != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> && a !== <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> || itest || !itest || true || !true) {
 
     } else {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("A35.B35.C35.D35.E35.F35.G35.H35.I35? & kotlin.Nothing?")!>a<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A35.B35.C35.D35.E35.F35.G35.H35.I35? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
     }
 }
 
@@ -650,71 +469,60 @@ fun case_37(x: Nothing?, y: Nothing?) {
 }
 
 // TESTCASE NUMBER: 38
-object A38 {
-    val x: Number = 11
-}
-
 fun case_38() {
     val z = null
 
-    if (A38.x != <!DEBUG_INFO_CONSTANT!>z<!>)
+    if (_Object.prop_2 != <!DEBUG_INFO_CONSTANT!>z<!>)
     else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing & kotlin.Number")!>A38.x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing & kotlin.Number")!>A38.x<!>.equals(A38.x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing & kotlin.Number")!>_Object.prop_2<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing & kotlin.Number")!>_Object.prop_2<!>.equals(_Object.prop_2)
     }
 }
 
 // TESTCASE NUMBER: 39
-var z39 = null
-
 fun case_39(x: Char?) {
-    if (x == <!DEBUG_INFO_CONSTANT!>z39<!> && true) {
+    if (x == <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> && true) {
         <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Char? & kotlin.Nothing?")!>x<!>
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Char? & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
 // TESTCASE NUMBER: 40
-val z40 = null
-
 fun case_40() {
     val x: Unit? = null
     var z = null
 
-    if (x == <!DEBUG_INFO_CONSTANT!>z40<!> || <!DEBUG_INFO_CONSTANT!>z<!> === x) {
+    if (x == <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> || <!DEBUG_INFO_CONSTANT!>z<!> === x) {
         <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & kotlin.Unit?")!>x<!>
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & kotlin.Unit?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
 // TESTCASE NUMBER: 41
-fun case_41(x: A?, z: Nothing?) {
+fun case_41(x: _EmptyClass?, z: Nothing?) {
     val y = true
 
     if (x === <!DEBUG_INFO_CONSTANT!>z<!> && !y) {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("A? & kotlin.Nothing?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A? & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass? & kotlin.Nothing?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyClass? & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
 // TESTCASE NUMBER: 42
-val x42: B = B
-var z42: Nothing? = null
-
 fun case_42() {
-    if (x42 == <!DEBUG_INFO_CONSTANT!>z42<!> || <!DEBUG_INFO_EXPRESSION_TYPE("B")!>x42<!> === <!DEBUG_INFO_CONSTANT!>z42<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("B & kotlin.Nothing")!>x42<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("B & kotlin.Nothing")!>x42<!>.equals(x42)
+    if (_EmptyObject == <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!> || <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject")!>_EmptyObject<!> === <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject & kotlin.Nothing")!>_EmptyObject<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_EmptyObject")!>_EmptyObject<!>.equals(_EmptyObject)
     }
 }
 
 // TESTCASE NUMBER: 43
-fun case_43(x: C) {
+fun case_43(x: _TypeAliasNullableString) {
     val z = null
 
-    if (x == <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String? */ & kotlin.Nothing?")!>x<!> == <!DEBUG_INFO_CONSTANT!>z<!>) {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("C /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+    if (x == <!DEBUG_INFO_CONSTANT!>z<!> && <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & kotlin.Nothing?")!>x<!> == <!DEBUG_INFO_CONSTANT!>z<!>) {
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
@@ -723,48 +531,41 @@ fun case_43(x: C) {
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28329
  */
-fun case_44(x: C<!REDUNDANT_NULLABLE!>?<!>, z1: Nothing?) {
+fun case_44(x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>, z1: Nothing?) {
     if (true && true && true && true && x !== <!DEBUG_INFO_CONSTANT!>z1<!>) {
 
     } else if (false) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("C? /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("C? /* = kotlin.String? */")!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */")!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 45
-class A45 {
-    val x: D? = null
-}
-
 fun case_45() {
-    val a = A45()
+    val a = _Class()
     var z: Nothing? = null
 
-    if (a.x != <!DEBUG_INFO_CONSTANT!>z<!> || true) {
-        if (a.x == null) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("D? /* = kotlin.Float? */ & kotlin.Nothing?")!>a.x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("D? /* = kotlin.Float? */ & kotlin.Nothing?")!>a.x<!>.equals(a.x)
+    if (a.prop_4 != <!DEBUG_INFO_CONSTANT!>z<!> || true) {
+        if (a.prop_4 == null) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float? & kotlin.Nothing?")!>a.prop_4<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float? & kotlin.Nothing?")!>a.prop_4<!>.equals(a.prop_4)
         }
     }
 }
 
 // TESTCASE NUMBER: 46
-var z46: Nothing? = null
-val x46: E = null
-
-fun case_46(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
-    val t: E = null
+fun case_46(x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>, y: _TypeAliasNullableString) {
+    val t: _TypeAliasNullableString = null
     var z: Nothing? = null
 
-    if (x != <!DEBUG_INFO_CONSTANT!>z46<!>) {
+    if (x != <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
 
     } else {
-        if (y === <!DEBUG_INFO_CONSTANT!>z46<!>) {
-            if (<!DEBUG_INFO_CONSTANT!>z<!> != x46) {
-                if (<!DEBUG_INFO_CONSTANT!>z<!> === t || t == <!DEBUG_INFO_CONSTANT!>z46<!>) {
-                    <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("E? /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
-                    <!DEBUG_INFO_EXPRESSION_TYPE("E? /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+        if (y === <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
+            if (<!DEBUG_INFO_CONSTANT!>z<!> != nullableStringProperty) {
+                if (<!DEBUG_INFO_CONSTANT!>z<!> === t || t == <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
+                    <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
+                    <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
                 }
             }
         }
@@ -776,95 +577,71 @@ fun case_46(x: E<!REDUNDANT_NULLABLE!>?<!>, y: E) {
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28328
  */
-fun case_47(x: E, y: E, z: Nothing?) = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x !== <!DEBUG_INFO_CONSTANT!>z<!> && true && true && true) "1"
+fun case_47(x: _TypeAliasNullableString, y: _TypeAliasNullableString, z: Nothing?) = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x !== <!DEBUG_INFO_CONSTANT!>z<!> && true && true && true) "1"
     else if (y != <!DEBUG_INFO_CONSTANT!>z<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("E /* = kotlin.String? */")!>x<!>.equals(x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */")!>x<!>.equals(x)
     } else "-1"<!>
 
 // TESTCASE NUMBER: 48
-fun case_48(x: othertypes.A?, z: Nothing?) =
+fun case_48(x: _EmptyClass12_48?, z: Nothing?) =
     if (x != <!DEBUG_INFO_CONSTANT!>z<!> && true) {
         throw Exception()
     } else {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes.A?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes.A?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes._EmptyClass12_48?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes._EmptyClass12_48?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 
 // TESTCASE NUMBER: 49
-class A49 {
-    val x: othertypes.B<!REDUNDANT_NULLABLE!>?<!>
+class Case49 {
+    val x: _TypeAliasNullableString<!REDUNDANT_NULLABLE!>?<!>
     init {
-        x = othertypes.B()
+        x = _TypeAliasNullableString()
     }
 }
 
 fun case_49() {
-    val a = A49()
+    val a = Case49()
     var z = null
 
     if (a.x === <!DEBUG_INFO_CONSTANT!>z<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes.B? /* = kotlin.String? */")!>a.x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Nothing? & othertypes.B? /* = kotlin.String? */")!>a.x<!>.equals(a.x)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & kotlin.Nothing?")!>a.x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString? /* = kotlin.String? */ & kotlin.Nothing?")!>a.x<!>.equals(a.x)
     }
 }
 
 // TESTCASE NUMBER: 50
-fun case_50(x: F) {
+fun case_50(x: _TypeAliasNullableString) {
     val z1 = null
     val z2 = null
     val <!UNUSED_VARIABLE!>t<!> = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & String}> & java.io.Serializable}")!>if (x != <!DEBUG_INFO_CONSTANT!>z1<!> && <!DEBUG_INFO_CONSTANT!>z2<!> !== x) "" else {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("F /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("F /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableString /* = kotlin.String? */ & kotlin.Nothing?")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }<!>
 }
 
 // TESTCASE NUMBER: 51
 fun case_51() {
-    val x: G = null
+    val x: _TypeAliasNullableNothing = null
     val z: Nothing? = null
 
     if (<!DEBUG_INFO_CONSTANT!>x<!> === <!DEBUG_INFO_CONSTANT!>z<!> || <!DEBUG_INFO_CONSTANT!>z<!> == <!DEBUG_INFO_CONSTANT!>x<!> && <!DEBUG_INFO_CONSTANT!>x<!> == <!DEBUG_INFO_CONSTANT!>z<!> || false || false || false) {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("G /* = kotlin.Nothing? */")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("G /* = kotlin.Nothing? */")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableNothing /* = kotlin.Nothing? */")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_TypeAliasNullableNothing /* = kotlin.Nothing? */")!>x<!>.equals(<!DEBUG_INFO_CONSTANT!>x<!>)
     }
 }
 
 // TESTCASE NUMBER: 52
-val x52: Int? = 1
-val z52: Nothing? = null
-
-val case_52 = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & Byte & Int & Long & Short}> & java.io.Serializable}")!>if (x52 !== <!DEBUG_INFO_CONSTANT!>z52<!> && <!DEBUG_INFO_CONSTANT!>z52<!> != x52) 0 else {
-    <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>x52<!>
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>x52<!>.equals(<!DEBUG_INFO_CONSTANT!>x52<!>)
+val case_52 = <!DEBUG_INFO_EXPRESSION_TYPE("{Comparable<{Boolean & Byte & Int & Long & Short}> & java.io.Serializable}")!>if (nullableIntProperty !== <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!> && <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!> != nullableIntProperty) 0 else {
+    <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>nullableIntProperty<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>nullableIntProperty<!>.equals(<!DEBUG_INFO_CONSTANT!>nullableIntProperty<!>)
 }<!>
 
 //TESTCASE NUMBER: 53
-object A53 {
-    var z53 = null
-    object B53 {
-        object C53 {
-            object D53 {
-                object E53 {
-                    object F53 {
-                        object G53 {
-                            object H53 {
-                                object I53 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun case_53(a: A53.B53.C53.D53.E53.F53.G53.H53.I53?) {
-    if (a == A53.z53) {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("A53.B53.C53.D53.E53.F53.G53.H53.I53? & kotlin.Nothing?")!>a<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A53.B53.C53.D53.E53.F53.G53.H53.I53? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
+fun case_53(a: _DeepObject.A.B.C.D.E.F.G.J?) {
+    if (a == _DeepObject.prop_2) {
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
     }
 }
 
@@ -916,18 +693,10 @@ fun case_55(b: Boolean) {
 }
 
 // TESTCASE NUMBER: 56
-enum class A56(val c: Int?) {
-    A(1),
-    B(5),
-    D(null)
-}
-
-val z56 = null
-
 fun case_56() {
-    if (A56.B.c == <!DEBUG_INFO_CONSTANT!>z56<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>A56.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>A56.B.c<!>.equals(A56.B.c)
+    if (_EnumClassWithNullableProperty.A.prop_1 == <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>_EnumClassWithNullableProperty.A.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int? & kotlin.Nothing?")!>_EnumClassWithNullableProperty.A.prop_1<!>.equals(_EnumClassWithNullableProperty.A.prop_1)
     }
 }
 
@@ -968,32 +737,28 @@ fun case_59(a: ((() -> Unit) -> Unit)?, b: (() -> Unit)?, z: Nothing?) {
 }
 
 // TESTCASE NUMBER: 60
-var z60: Nothing? = null
-
 fun case_60(b: Boolean) {
     val x = {
         if (b) object {
             val a = 10
-        } else <!DEBUG_INFO_CONSTANT!>z60<!>
+        } else <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>
     }
 
-    val y = if (b) x else <!DEBUG_INFO_CONSTANT!>z60<!>
+    val y = if (b) x else <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>
 
-    if (y != <!DEBUG_INFO_CONSTANT!>z60<!>) {
+    if (y != <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
         val z = <!DEBUG_INFO_EXPRESSION_TYPE("case_60.<anonymous>.<no name provided>?")!><!DEBUG_INFO_EXPRESSION_TYPE("(() -> case_60.<anonymous>.<no name provided>?)? & () -> case_60.<anonymous>.<no name provided>?"), DEBUG_INFO_SMARTCAST!>y<!>()<!>
 
-        if (z == <!DEBUG_INFO_CONSTANT!>z60<!>) {
+        if (z == <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!>) {
             <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("case_60.<anonymous>.<no name provided>? & kotlin.Nothing?")!>z<!>
         }
     }
 }
 
 // TESTCASE NUMBER: 61
-var z61 = null
-
 fun case_61(x: Any?) {
     if (x is Number?) {
-        if (x !== <!DEBUG_INFO_CONSTANT!>z61<!>) {
+        if (x !== <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any & kotlin.Any? & kotlin.Number")!>x<!>
             <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & kotlin.Number"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
@@ -1026,10 +791,8 @@ fun case_63(x: Any?, b: Boolean) {
 }
 
 // TESTCASE NUMBER: 64
-var z64 = null
-
 fun case_64(x: Any?) {
-    if (x != try {<!DEBUG_INFO_CONSTANT!>z64<!>} finally {}) {
+    if (x != try {<!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>} finally {}) {
         if (x is Number) {
             if (x is Int?) {
                 <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any & kotlin.Any? & kotlin.Int & kotlin.Number")!>x<!>
@@ -1041,14 +804,14 @@ fun case_64(x: Any?) {
 
 // TESTCASE NUMBER: 65
 fun case_65(x: Any?, z: Nothing?) {
-    if (x is A2?) {
-        if (x is B2?) {
-            if (x is C2?) {
-                if (x is D2?) {
-                    if (x is E2?) {
+    if (x is _ClassLevel1?) {
+        if (x is _ClassLevel2?) {
+            if (x is _ClassLevel3?) {
+                if (x is _ClassLevel4?) {
+                    if (x is _ClassLevel5?) {
                         if (x != <!DEBUG_INFO_CONSTANT!>z<!>) {
-                            <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-                            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+                            <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & _ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+                            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
                         }
                     }
                 }
@@ -1059,13 +822,13 @@ fun case_65(x: Any?, z: Nothing?) {
 
 // TESTCASE NUMBER: 66
 fun case_66(x: Any?, z1: Nothing?, z2: Nothing?, b: Boolean) {
-    if (x is A2?) {
-        if (x is B2?) {
-            if (x is C2?) {
-                if (x != if (b) { <!DEBUG_INFO_CONSTANT!>z1<!> } else { <!DEBUG_INFO_CONSTANT!>z2<!> } && x is D2?) {
-                    if (x is E2?) {
-                        <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    if (x is _ClassLevel1?) {
+        if (x is _ClassLevel2?) {
+            if (x is _ClassLevel3?) {
+                if (x != if (b) { <!DEBUG_INFO_CONSTANT!>z1<!> } else { <!DEBUG_INFO_CONSTANT!>z2<!> } && x is _ClassLevel4?) {
+                    if (x is _ClassLevel5?) {
+                        <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & _ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
                     }
                 }
             }
@@ -1077,47 +840,44 @@ fun case_66(x: Any?, z1: Nothing?, z2: Nothing?, b: Boolean) {
 fun case_67(x: Any?) {
     var z = null
 
-    if (x is A2? && x is B2? && x is C2?) {
-        if (x is D2? && x != (fun (): Nothing? { return <!DEBUG_INFO_CONSTANT!>z<!> })() && x is E2?) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    if (x is _ClassLevel1? && x is _ClassLevel2? && x is _ClassLevel3?) {
+        if (x is _ClassLevel4? && x != (fun (): Nothing? { return <!DEBUG_INFO_CONSTANT!>z<!> })() && x is _ClassLevel5?) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & _ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
     }
 }
 
 // TESTCASE NUMBER: 68
 fun case_68(x: Any?, z: Nothing?) {
-    if (x is A2? && x is B2? && x is C2?) {
-        if (x is D2? && x != (fun (): Nothing? { return <!DEBUG_INFO_CONSTANT!>z<!> })() && x is E2?) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    if (x is _ClassLevel1? && x is _ClassLevel2? && x is _ClassLevel3?) {
+        if (x is _ClassLevel4? && x != (fun (): Nothing? { return <!DEBUG_INFO_CONSTANT!>z<!> })() && x is _ClassLevel5?) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & _ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
     }
 }
 
 // TESTCASE NUMBER: 69
 fun case_69(x: Any?, z: Nothing?) {
-    if (x is A2? && x is B2? && x is C2? && x is D2? && x != try { <!DEBUG_INFO_CONSTANT!>z<!> } catch (e: Exception) { <!DEBUG_INFO_CONSTANT!>z<!> } && x is E2?) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    if (x is _ClassLevel1? && x is _ClassLevel2? && x is _ClassLevel3? && x is _ClassLevel4? && x != try { <!DEBUG_INFO_CONSTANT!>z<!> } catch (e: Exception) { <!DEBUG_INFO_CONSTANT!>z<!> } && x is _ClassLevel5?) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & _ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
 // TESTCASE NUMBER: 70
-val z70_1: Nothing? = null
-var z70_2 = null
-
 fun case_70(x: Any?) {
-    if (x is A2? && x is B2? && x is C2?) {
-        if (x is D2?) {
+    if (x is _ClassLevel1? && x is _ClassLevel2? && x is _ClassLevel3?) {
+        if (x is _ClassLevel4?) {
 
-        } else if (x is E2? && x != <!DEBUG_INFO_CONSTANT!>z70_1<!> || x != <!DEBUG_INFO_CONSTANT!>z70_2<!>) {
-            <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & C2 & kotlin.Any & kotlin.Any?")!>x<!>
-            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+        } else if (x is _ClassLevel5? && x != <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!> || x != <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!>) {
+            <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _ClassLevel3 & kotlin.Any & kotlin.Any?")!>x<!>
+            <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
         }
-    } else if (x is D2? && x !== <!DEBUG_INFO_CONSTANT!>z70_1<!> && x is E2?) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("D2 & E2 & kotlin.Any & kotlin.Any?")!>x<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & D2"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
+    } else if (x is _ClassLevel4? && x !== <!DEBUG_INFO_CONSTANT!>nullableNothingProperty<!> && x is _ClassLevel5?) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel4 & _ClassLevel5 & kotlin.Any & kotlin.Any?")!>x<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel4"), DEBUG_INFO_SMARTCAST!>x<!>.equals(x)
     }
 }
 
@@ -1131,15 +891,15 @@ fun case_71(t: Any?) {
     val z1 = null
     var z2 = <!DEBUG_INFO_CONSTANT!>z1<!>
 
-    if (t is L1?) {
-        if (t is L2?) {
+    if (t is _Interface1?) {
+        if (t is _Interface2?) {
             if (t != <!DEBUG_INFO_CONSTANT!>z2<!>) {
-                <!DEBUG_INFO_EXPRESSION_TYPE("L1 & L2 & kotlin.Any & kotlin.Any?")!>t<!>
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L1"), DEBUG_INFO_SMARTCAST!>t<!>.g1()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g2()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g()
+                <!DEBUG_INFO_EXPRESSION_TYPE("_Interface1 & _Interface2 & kotlin.Any & kotlin.Any?")!>t<!>
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest1()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface2"), DEBUG_INFO_SMARTCAST!>t<!>.itest2()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest()
 
-                <!DEBUG_INFO_EXPRESSION_TYPE("L1 & L2 & kotlin.Any & kotlin.Any?")!>t<!>.let { <!DEBUG_INFO_EXPRESSION_TYPE("{Any & L1 & L2}")!>it<!>.g1(); <!DEBUG_INFO_EXPRESSION_TYPE("{Any & L1 & L2}")!>it<!>.g2() }
+                <!DEBUG_INFO_EXPRESSION_TYPE("_Interface1 & _Interface2 & kotlin.Any & kotlin.Any?")!>t<!>.let { <!DEBUG_INFO_EXPRESSION_TYPE("{Any & _Interface1 & _Interface2}")!>it<!>.itest1(); <!DEBUG_INFO_EXPRESSION_TYPE("{Any & _Interface1 & _Interface2}")!>it<!>.itest2() }
             }
         }
     }
@@ -1154,13 +914,13 @@ fun case_71(t: Any?) {
 fun case_72(t: Any?, z1: Nothing?) {
     var z2 = null
 
-    if (t is L1? && t != <!DEBUG_INFO_CONSTANT!>z1<!> ?: <!DEBUG_INFO_CONSTANT!>z2<!> && t is L2?) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("L1 & L2 & kotlin.Any & kotlin.Any?")!>t<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L1"), DEBUG_INFO_SMARTCAST!>t<!>.g1()
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g2()
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g()
+    if (t is _Interface1? && t != <!DEBUG_INFO_CONSTANT!>z1<!> ?: <!DEBUG_INFO_CONSTANT!>z2<!> && t is _Interface2?) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("_Interface1 & _Interface2 & kotlin.Any & kotlin.Any?")!>t<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest1()
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface2"), DEBUG_INFO_SMARTCAST!>t<!>.itest2()
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest()
 
-        <!DEBUG_INFO_EXPRESSION_TYPE("L1 & L2 & kotlin.Any & kotlin.Any?")!>t<!>.let { <!DEBUG_INFO_EXPRESSION_TYPE("{Any & L1 & L2}")!>it<!>.g1(); <!DEBUG_INFO_EXPRESSION_TYPE("{Any & L1 & L2}")!>it<!>.g2() }
+        <!DEBUG_INFO_EXPRESSION_TYPE("_Interface1 & _Interface2 & kotlin.Any & kotlin.Any?")!>t<!>.let { <!DEBUG_INFO_EXPRESSION_TYPE("{Any & _Interface1 & _Interface2}")!>it<!>.itest1(); <!DEBUG_INFO_EXPRESSION_TYPE("{Any & _Interface1 & _Interface2}")!>it<!>.itest2() }
     }
 }
 
@@ -1173,17 +933,17 @@ fun case_72(t: Any?, z1: Nothing?) {
 fun case_73(t: Any?) {
     val `null` = null
 
-    if (t is L2?) {
-        if (t is A2?) {
-            if (t is B2? && t is L1?) {
-                if (t !is L3?) {} else if (false) {
+    if (t is _Interface2?) {
+        if (t is _ClassLevel1?) {
+            if (t is _ClassLevel2? && t is _Interface1?) {
+                if (t !is _Interface3?) {} else if (false) {
                     if (t != <!DEBUG_INFO_CONSTANT!>`null`<!>) {
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g2()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L1"), DEBUG_INFO_SMARTCAST!>t<!>.g1()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L3"), DEBUG_INFO_SMARTCAST!>t<!>.g()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>t<!>.t1()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & B2"), DEBUG_INFO_SMARTCAST!>t<!>.t2()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & L1 & L2 & L3 & kotlin.Any & kotlin.Any?")!>t<!>
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface2"), DEBUG_INFO_SMARTCAST!>t<!>.itest2()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest1()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface3"), DEBUG_INFO_SMARTCAST!>t<!>.itest()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>t<!>.test1()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel2"), DEBUG_INFO_SMARTCAST!>t<!>.test2()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _Interface1 & _Interface2 & _Interface3 & kotlin.Any & kotlin.Any?")!>t<!>
                     }
                 }
             }
@@ -1197,21 +957,18 @@ fun case_73(t: Any?) {
  * DISCUSSION
  * ISSUES: KT-28362
  */
-val z74_1 = null
-var z74_2 = null
-
 fun case_74(t: Any?) {
-    if (t is L2?) {
-        if (t is A2?) {
-            if (t == <!DEBUG_INFO_CONSTANT!>z74_1<!> || t === <!DEBUG_INFO_CONSTANT!>z74_2<!> || t !is L1?) else {
-                if (t is B2?) {
-                    if (t is L3?) {
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g2()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L1"), DEBUG_INFO_SMARTCAST!>t<!>.g1()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L3"), DEBUG_INFO_SMARTCAST!>t<!>.g()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & A2"), DEBUG_INFO_SMARTCAST!>t<!>.t1()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & B2"), DEBUG_INFO_SMARTCAST!>t<!>.t2()
-                        <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & L1 & L2 & L3 & kotlin.Any & kotlin.Any?")!>t<!>
+    if (t is _Interface2?) {
+        if (t is _ClassLevel1?) {
+            if (t == <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> || t === <!DEBUG_INFO_CONSTANT!>implicitNullableNothingProperty<!> || t !is _Interface1?) else {
+                if (t is _ClassLevel2?) {
+                    if (t is _Interface3?) {
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface2"), DEBUG_INFO_SMARTCAST!>t<!>.itest2()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest1()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface3"), DEBUG_INFO_SMARTCAST!>t<!>.itest()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel1"), DEBUG_INFO_SMARTCAST!>t<!>.test1()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel2"), DEBUG_INFO_SMARTCAST!>t<!>.test2()
+                        <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _Interface1 & _Interface2 & _Interface3 & kotlin.Any & kotlin.Any?")!>t<!>
                     }
                 }
             }
@@ -1226,15 +983,15 @@ fun case_74(t: Any?) {
  * ISSUES: KT-28362
  */
 fun case_75(t: Any?, z: Nothing?) {
-    if (t !is B2? || <!USELESS_IS_CHECK!>t !is A2?<!>) else {
-        if (t === ((((((<!DEBUG_INFO_CONSTANT!>z<!>)))))) || t !is L1?) else {
-            if (t !is L2? || t !is L3?) {} else {
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L2"), DEBUG_INFO_SMARTCAST!>t<!>.g2()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L1"), DEBUG_INFO_SMARTCAST!>t<!>.g1()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & L3"), DEBUG_INFO_SMARTCAST!>t<!>.g()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & B2"), DEBUG_INFO_SMARTCAST!>t<!>.t1()
-                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & B2"), DEBUG_INFO_SMARTCAST!>t<!>.t2()
-                <!DEBUG_INFO_EXPRESSION_TYPE("A2 & B2 & L1 & L2 & L3 & kotlin.Any & kotlin.Any?"), DEBUG_INFO_SMARTCAST!>t<!>
+    if (t !is _ClassLevel2? || <!USELESS_IS_CHECK!>t !is _ClassLevel1?<!>) else {
+        if (t === ((((((<!DEBUG_INFO_CONSTANT!>z<!>)))))) || t !is _Interface1?) else {
+            if (t !is _Interface2? || t !is _Interface3?) {} else {
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface2"), DEBUG_INFO_SMARTCAST!>t<!>.itest2()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface1"), DEBUG_INFO_SMARTCAST!>t<!>.itest1()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _Interface3"), DEBUG_INFO_SMARTCAST!>t<!>.itest()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel2"), DEBUG_INFO_SMARTCAST!>t<!>.test1()
+                <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Any? & _ClassLevel2"), DEBUG_INFO_SMARTCAST!>t<!>.test2()
+                <!DEBUG_INFO_EXPRESSION_TYPE("_ClassLevel1 & _ClassLevel2 & _Interface1 & _Interface2 & _Interface3 & kotlin.Any & kotlin.Any?"), DEBUG_INFO_SMARTCAST!>t<!>
             }
         }
     }

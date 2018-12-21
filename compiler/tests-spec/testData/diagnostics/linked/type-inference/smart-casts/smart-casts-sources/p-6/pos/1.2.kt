@@ -10,45 +10,27 @@
  * NUMBER: 2
  * DESCRIPTION: Nullability condition (value & reference equality) smartcast source using if expression and simple builtin and custom types for one variable.
  * UNSPECIFIED BEHAVIOR
+ * HELPERS: objects, enumClasses
  */
 
-// FILE: other_types.kt
+// FILE: other_package.kt
 
-package othertypes
+package otherpackage
 
-// TESTCASE NUMBER: 13
-class A {}
-
-// TESTCASE NUMBER: 14
-typealias B = String?
-
-// TESTCASE NUMBER: 16
-typealias C = Nothing
+// TESTCASE NUMBER: 8, 16
+class _EmptyClass8_16 {}
 
 // FILE: main.kt
 
-import othertypes.*
+import otherpackage.*
 
-// TESTCASE NUMBER: 6
-class A {}
-
-// TESTCASE NUMBER: 7
-object B {}
-
-// TESTCASE NUMBER: 8
-typealias C = String?
-
-// TESTCASE NUMBER: 10
-typealias D = Float
-
-// TESTCASE NUMBER: 11
-typealias E = C
-
-// TESTCASE NUMBER: 15
-typealias F = othertypes.B
-
-// TESTCASE NUMBER: 16
-typealias G = othertypes.C?
+// TESTCASE NUMBER: 8, 16
+class Case8_16 {
+    val x: otherpackage._EmptyClass8_16?
+    init {
+        x = otherpackage._EmptyClass8_16()
+    }
+}
 
 // TESTCASE NUMBER: 1
 fun case_1(x: Any?) {
@@ -59,30 +41,10 @@ fun case_1(x: Any?) {
 }
 
 // TESTCASE NUMBER: 2
-object A2 {
-    object B2 {
-        object C2 {
-            object D2 {
-                object E2 {
-                    object F2 {
-                        object G2 {
-                            object H2 {
-                                object I2 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun case_2(a: A2.B2.C2.D2.E2.F2.G2.H2.I2?) =
+fun case_2(a: _DeepObject.A.B.C.D.E.F.G.J?) =
     if (false || a != null == true == false == false == false == true == false == true == false == false == true == true || false) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A2.B2.C2.D2.E2.F2.G2.H2.I2? & A2.B2.C2.D2.E2.F2.G2.H2.I2"), DEBUG_INFO_SMARTCAST!>a<!>.x
-        <!DEBUG_INFO_EXPRESSION_TYPE("A2.B2.C2.D2.E2.F2.G2.H2.I2? & A2.B2.C2.D2.E2.F2.G2.H2.I2"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.x
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     } else -1
 
 /*
@@ -148,46 +110,20 @@ fun case_5(b: Boolean) {
 }
 
 // TESTCASE NUMBER: 6
-enum class A6(val c: Int?) {
-    A(1),
-    B(5),
-    D(null)
-}
-
 fun case_6(z: Boolean?) {
-    if (false || A6.B.c != null && z != null && <!DEBUG_INFO_SMARTCAST!>z<!>) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>A6.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>A6.B.c<!>.equals(A6.B.c)
+    if (false || _EnumClassWithNullableProperty.B.prop_1 != null && z != null && <!DEBUG_INFO_SMARTCAST!>z<!>) {
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int & kotlin.Int?")!>_EnumClassWithNullableProperty.B.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int"), DEBUG_INFO_SMARTCAST!>_EnumClassWithNullableProperty.B.prop_1<!>.equals(_EnumClassWithNullableProperty.B.prop_1)
     }
 }
 
 // TESTCASE NUMBER: 7
-object A7 {
-    object B7 {
-        object C7 {
-            object D7 {
-                object E7 {
-                    object F7 {
-                        object G7 {
-                            object H7 {
-                                object I7 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun case_7(a: A7.B7.C7.D7.E7.F7.G7.H7.I7?) {
+fun case_7(a: _DeepObject.A.B.C.D.E.F.G.J?) {
     val g = false
 
     if (a != null && g) {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A7.B7.C7.D7.E7.F7.G7.H7.I7 & A7.B7.C7.D7.E7.F7.G7.H7.I7?")!>a<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A7.B7.C7.D7.E7.F7.G7.H7.I7? & A7.B7.C7.D7.E7.F7.G7.H7.I7"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J & _DeepObject.A.B.C.D.E.F.G.J?")!>a<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     }
 }
 
@@ -196,15 +132,8 @@ fun case_7(a: A7.B7.C7.D7.E7.F7.G7.H7.I7?) {
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28329
  */
-class A8 {
-    val x: othertypes.B<!REDUNDANT_NULLABLE!>?<!>
-    init {
-        x = othertypes.B()
-    }
-}
-
 fun case_8(b: Boolean, c: Boolean?) {
-    val a = A8()
+    val a = Case8_16()
 
     if (a.x !== null && false) {
         if (false || false || false || false || <!SENSELESS_COMPARISON!>a.x != null<!> || false || false || false) {
@@ -222,8 +151,8 @@ fun case_8(b: Boolean, c: Boolean?) {
                                                         if (<!SENSELESS_COMPARISON!>a.x !== null<!>) {
                                                             if (<!SENSELESS_COMPARISON!>a.x != null<!>) {
                                                                 if (<!SENSELESS_COMPARISON!>a.x !== null<!>) {
-                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */ & othertypes.B? /* = kotlin.String? */")!>a.x<!>
-                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
+                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("otherpackage._EmptyClass8_16 & otherpackage._EmptyClass8_16?")!>a.x<!>
+                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("otherpackage._EmptyClass8_16"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
                                                                 }
                                                             }
                                                         }
@@ -253,32 +182,12 @@ fun case_9(x: Any?) {
 }
 
 // TESTCASE NUMBER: 10
-object A10 {
-    object B10 {
-        object C10 {
-            object D10 {
-                object E10 {
-                    object F10 {
-                        object G10 {
-                            object H10 {
-                                object I10 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun case_10(a: A10.B10.C10.D10.E10.F10.G10.H10.I10?) =
+fun case_10(a: _DeepObject.A.B.C.D.E.F.G.J?) =
     if (a == null == true == false == false == false == true == false == true == false == false == true == true && true) {
         -1
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("A10.B10.C10.D10.E10.F10.G10.H10.I10? & A10.B10.C10.D10.E10.F10.G10.H10.I10"), DEBUG_INFO_SMARTCAST!>a<!>.x
-        <!DEBUG_INFO_EXPRESSION_TYPE("A10.B10.C10.D10.E10.F10.G10.H10.I10? & A10.B10.C10.D10.E10.F10.G10.H10.I10"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.x
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & _DeepObject.A.B.C.D.E.F.G.J"), DEBUG_INFO_SMARTCAST!>a<!>.equals(a)
     }
 
 /*
@@ -357,63 +266,30 @@ fun case_13(b: Boolean, c: Boolean, d: Boolean) {
  * UNEXPECTED BEHAVIOUR
  * ISSUES: KT-28329
  */
-enum class A14(val c: Int?) {
-    A(1),
-    B(5),
-    D(null)
-}
-
 fun case_14(z: Boolean?) {
-    if (true && true && true && true && A14.B.c != null || z != null || <!ALWAYS_NULL!>z<!>!! && true && true) {
+    if (true && true && true && true && _EnumClassWithNullableProperty.B.prop_1 != null || z != null || <!ALWAYS_NULL!>z<!>!! && true && true) {
 
     } else {
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>A14.B.c<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>A14.B.c<!><!UNSAFE_CALL!>.<!>equals(A14.B.c)
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>_EnumClassWithNullableProperty.B.prop_1<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int?")!>_EnumClassWithNullableProperty.B.prop_1<!><!UNSAFE_CALL!>.<!>equals(_EnumClassWithNullableProperty.B.prop_1)
     }
 }
 
 // TESTCASE NUMBER: 15
-object A15 {
-    object B15 {
-        object C15 {
-            object D15 {
-                object E15 {
-                    object F15 {
-                        object G15 {
-                            object H15 {
-                                object I15 {
-                                    val x: Int? = 10
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun case_15(a: A15.B15.C15.D15.E15.F15.G15.H15.I15?) {
+fun case_15(a: _DeepObject.A.B.C.D.E.F.G.J?) {
     val g = false
 
     if (true && a != null || g || !g || true || !true) {
 
     } else {
-        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("A15.B15.C15.D15.E15.F15.G15.H15.I15? & kotlin.Nothing?")!>a<!>
-        <!DEBUG_INFO_EXPRESSION_TYPE("A15.B15.C15.D15.E15.F15.G15.H15.I15? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
+        <!DEBUG_INFO_CONSTANT, DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("_DeepObject.A.B.C.D.E.F.G.J? & kotlin.Nothing?")!>a<!>.equals(<!DEBUG_INFO_CONSTANT!>a<!>)
     }
 }
 
 // TESTCASE NUMBER: 16
-class A16 {
-    val x: othertypes.B<!REDUNDANT_NULLABLE!>?<!>
-    init {
-        x = othertypes.B()
-    }
-}
-
 fun case_16(b: Boolean, c: Boolean?) {
-    val a = A16()
+    val a = Case8_16()
 
     if (a.x != null && false && false && false && false && false && false) {
         if ( <!SENSELESS_COMPARISON!>a.x == null<!> || false) {
@@ -446,8 +322,8 @@ fun case_16(b: Boolean, c: Boolean?) {
                                                             } else {
                                                                 if (<!SENSELESS_COMPARISON!>a.x === null<!>) {
                                                                 } else {
-                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */ & othertypes.B? /* = kotlin.String? */")!>a.x<!>
-                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("othertypes.B /* = kotlin.String */"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
+                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("otherpackage._EmptyClass8_16 & otherpackage._EmptyClass8_16?")!>a.x<!>
+                                                                    <!DEBUG_INFO_EXPRESSION_TYPE("otherpackage._EmptyClass8_16"), DEBUG_INFO_SMARTCAST!>a.x<!>.equals(a.x)
                                                                 }
                                                             }
                                                         }

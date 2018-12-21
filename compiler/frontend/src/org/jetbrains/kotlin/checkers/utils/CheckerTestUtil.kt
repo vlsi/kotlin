@@ -414,6 +414,14 @@ object CheckerTestUtil {
                 opened.pop()
             }
             while (currentDescriptor != null && i == currentDescriptor.start) {
+                while (!opened.isEmpty()) {
+                    if (currentDescriptor.end > opened.peek().end) {
+                        closeDiagnosticString(result)
+                        opened.pop()
+                    } else {
+                        break
+                    }
+                }
                 val isSkip = openDiagnosticsString(result, currentDescriptor, diagnosticToExpectedDiagnostic, withNewInferenceDirective)
 
                 if (currentDescriptor.end == i && !isSkip)

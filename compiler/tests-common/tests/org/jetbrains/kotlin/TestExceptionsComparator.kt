@@ -114,6 +114,7 @@ class TestExceptionsComparator(wholeFile: File) {
 
             e.original.printStackTrace()
             validateExistingExceptionFiles(e)
+            return
         }
         validateExistingExceptionFiles(null)
     }
