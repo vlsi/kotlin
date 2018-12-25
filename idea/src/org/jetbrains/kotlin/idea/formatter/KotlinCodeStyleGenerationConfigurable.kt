@@ -7,10 +7,8 @@ package org.jetbrains.kotlin.idea.formatter
 
 import com.intellij.application.options.codeStyle.CommenterForm
 import com.intellij.openapi.application.ApplicationBundle
-import com.intellij.openapi.options.Configurable
 import com.intellij.psi.codeStyle.CodeStyleConfigurable
 import com.intellij.psi.codeStyle.CodeStyleSettings
-import com.intellij.psi.codeStyle.CodeStyleSettingsProvider
 import com.intellij.psi.codeStyle.DisplayPriority
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.util.ui.JBInsets
@@ -19,7 +17,7 @@ import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class KotlinGenerationSettingsProvider : CodeStyleSettingsProvider() {
+class KotlinGenerationSettingsProvider : CodeStyleSettingsProviderCompat() {
     override fun createConfigurable(settings: CodeStyleSettings, modelSettings: CodeStyleSettings): CodeStyleConfigurable {
         return KotlinCodeStyleGenerationConfigurable(settings)
     }
@@ -28,13 +26,6 @@ class KotlinGenerationSettingsProvider : CodeStyleSettingsProvider() {
     override fun getPriority(): DisplayPriority = DisplayPriority.CODE_SETTINGS
     override fun hasSettingsPage() = false
     override fun getLanguage() = KotlinLanguage.INSTANCE
-
-    // Method is abstract before 183.
-    // BUNCH: 182
-    @Suppress("OverridingDeprecatedMember")
-    override fun createSettingsPage(settings: CodeStyleSettings, modelSettings: CodeStyleSettings): Configurable {
-        return createConfigurable(settings, modelSettings)
-    }
 }
 
 class KotlinCodeStyleGenerationConfigurable(private val mySettings: CodeStyleSettings) : CodeStyleConfigurable {
