@@ -4,6 +4,8 @@ class _Class {
     val prop_3 = 3
     val prop_4: Float? = 3f
     val prop_5: Float = 3f
+    val prop_6: String = "..."
+    val prop_7: Nothing? = "..."
 
     fun fun_1(): (Int) -> (Int) -> Int = {number: Int -> { number * 5 }}
     fun fun_2(value_1: Int): Int = value_1 * 2
